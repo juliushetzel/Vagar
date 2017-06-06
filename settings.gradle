@@ -1,1 +1,1 @@
-include ':app', ':vagar'
+include ':app', ':vagar', ':vagar-annotations'

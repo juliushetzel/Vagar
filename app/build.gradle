@@ -28,6 +28,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+
+    provided project(':vagar-annotations')
     compile project(':vagar')
 
     compile 'com.android.support:appcompat-v7:25.3.1'
