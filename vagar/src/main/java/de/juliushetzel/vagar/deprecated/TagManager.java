@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 public final class TagManager {
-    static final String EXTRA_TARGET_TAG_RETAIN_ID = "Vagar:EXTRA_TARGET_TAG_RETAIN_ID";
+    static final String EXTRA_TARGET_TAG_RETAIN_ID = "ViewModelBinder:EXTRA_TARGET_TAG_RETAIN_ID";
     private static final long ID_START_VALUE = 1000000;
     private final AtomicLong mNextId;
     private final Map<Long, ActivityTagRetainingLifecycleCallbacks> mActivityTagRetainers;

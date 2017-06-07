@@ -15,24 +15,32 @@ abstract class TagRetainingLifecycleCallbacks<T>{
         mTag = tag;
     }
 
-    protected final void onCreate(T target, Bundle savedInstanceState){
-        if(savedInstanceState != null &&
-                savedInstanceState.getString(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER) == mTag){
+    final void onCreate(T target, Bundle savedInstanceState){
+        if(containsTag(savedInstanceState)){
             mTargetReference = new WeakReference<>(target);
         }
     }
 
-    protected final void onSaveInstanceState(T target, Bundle outState){
-        if(mTargetReference.get() != null &&
-                mTargetReference.get() == target){
+    final void onSaveInstanceState(T target, Bundle outState){
+        if(isTarget(target)){
             outState.putString(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER, mTag);
             mTargetReference.clear();
         }
     }
 
-    protected final void onDestroy(T target){
+    final void onDestroy(T target){
         if(mTargetReference.get() == target){
             mTargetReference.clear();
         }
+    }
+
+    private boolean containsTag(Bundle savedInstanceState){
+        return savedInstanceState != null &&
+                mTag.equals(savedInstanceState.getString(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER));
+    }
+
+    private boolean isTarget(T target){
+        return mTargetReference.get() != null &&
+                mTargetReference.get() == target;
     }
 }

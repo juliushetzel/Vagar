@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 
-class FragmentTagRetainingLifecycleCallbacks extends TagRetainingLifecycleCallbacks<Fragment>{
+final class FragmentTagRetainingLifecycleCallbacks extends TagRetainingLifecycleCallbacks<Fragment>{
     
     FragmentTagRetainingLifecycleCallbacks(@NonNull Fragment target, @NonNull String tag) {
         super(target, tag);

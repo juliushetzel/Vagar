@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 import java.util.concurrent.atomic.AtomicLong;
 
 public final class TagManager {
-    static final String EXTRA_TAG_VIEW_MODEL_HOLDER = "Vagar:internal:EXTRA_TAG_VIEW_MODEL_HOLDER";
-    private static final String TAG_PREFIX = "Vagar:internal:view_model_holder_";
+    static final String EXTRA_TAG_VIEW_MODEL_HOLDER = "ViewModelBinder:internal:EXTRA_TAG_VIEW_MODEL_HOLDER";
+    private static final String TAG_PREFIX = "ViewModelBinder:internal:view_model_holder_";
     private static final AtomicLong NEXT_TAG = new AtomicLong(0);
 
     /**

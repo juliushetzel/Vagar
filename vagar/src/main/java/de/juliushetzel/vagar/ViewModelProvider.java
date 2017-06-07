@@ -3,8 +3,6 @@ package de.juliushetzel.vagar;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 final class ViewModelProvider {
 
     /**
@@ -16,7 +14,7 @@ final class ViewModelProvider {
      * @param <T> extends @link{ViewModel} the view model
      * @return the retained view model
      */
-    public static <T extends ViewModel> T get(@NonNull FragmentManager fragmentManager,
+    static <T extends ViewModel> T get(@NonNull FragmentManager fragmentManager,
                                        @NonNull ViewModel.Factory<T> factory,
                                        @NonNull String tag) {
 
@@ -26,7 +24,7 @@ final class ViewModelProvider {
     }
 
 
-    public static <T extends ViewModel> ViewModelHolder<T> getViewModelHolder(@NonNull FragmentManager fragmentManager,
+    private static <T extends ViewModel> ViewModelHolder<T> getViewModelHolder(@NonNull FragmentManager fragmentManager,
                                                               @NonNull ViewModel.Factory<T> factory,
                                                               @NonNull String tag){
         @SuppressWarnings("unchecked")

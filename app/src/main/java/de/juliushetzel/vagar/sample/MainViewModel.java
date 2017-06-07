@@ -10,25 +10,11 @@ public class MainViewModel implements ViewModel {
 
     private boolean mActive;
 
-    public final Command test = new Command(new Command.Function() {
-        @Override
-        public boolean apply() {
-            text.set("CLICK" + clicks++);
-            return false;
-        }
-    }, new Command.Function() {
-        @Override
-        public boolean apply() {
-            return mActive;
-        }
-    });
+    public final ObservableField<String> text = new ObservableField<>("NEU");
 
     public void doSth(){
-        mActive = !mActive;
-        test.notifyChange();
-    }
 
-    public final ObservableField<String> text = new ObservableField<>("NEU");
+    }
 
     @Override
     public void onStart() {

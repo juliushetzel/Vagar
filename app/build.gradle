@@ -31,6 +31,7 @@ dependencies {
 
     provided project(':vagar-annotations')
     compile project(':vagar')
+    annotationProcessor project(':vagar-processor')
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'

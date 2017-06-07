@@ -10,10 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import static de.juliushetzel.vagar.Conditions.checkRetainInstance;
 
-public final class Vagar {
+public final class ViewModelBinder {
     private final static TagManager TAG_MANAGER = new TagManager();
 
-    private Vagar(){}
+    private ViewModelBinder(){}
 
     /* For Activity */
 
