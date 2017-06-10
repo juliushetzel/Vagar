@@ -27,9 +27,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
-    provided project(':vagar-annotations')
+    compile project(':vagar-annotations')
     compile project(':vagar')
     annotationProcessor project(':vagar-processor')
 

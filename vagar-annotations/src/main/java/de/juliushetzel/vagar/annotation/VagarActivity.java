@@ -1,17 +1,22 @@
 package de.juliushetzel.vagar.annotation;
 
+import android.support.annotation.LayoutRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.CLASS)
+import de.juliushetzel.vagar.ViewModel;
+
 @Target(ElementType.TYPE)
+@Retention(RetentionPolicy.CLASS)
 public @interface VagarActivity {
 
-    Class<? extends de.juliushetzel.vagar.ViewModel> viewModel();
+    Class<? extends ViewModel> viewModel();
 
-    Class viewBindingClass();
+    @LayoutRes
+    int layout();
 
-    String bindingTag() default "viewModel";
+    String viewModelTag() default "viewModel";
 }
