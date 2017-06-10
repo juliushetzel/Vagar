@@ -23,11 +23,19 @@ public abstract class Generator<I, O> {
 
     public abstract O generate(I input);
 
-    public static Generator<TypeElement, MethodSpec.Builder> bindMethodGenerator(Environment environment){
+    public static Generator<TypeElement, MethodSpec.Builder> forMethodBind(Environment environment){
         return new BindMethodGenerator(environment);
     }
 
-    public static Generator<List<TypeElement>, TypeSpec.Builder> vagarClassGenerator(Environment environment){
-        return new VagarClassGenerator(environment);
+    public static Generator<List<TypeElement>, TypeSpec.Builder> forClassVagar(Environment environment){
+        return new EntryPointClassGenerator(environment);
+    }
+
+    public static Generator<List<TypeElement>, TypeSpec.Builder> forClassViewModelBuilderContainer(Environment environment){
+        return new ViewModelBuilderContainerGenerator(environment);
+    }
+
+    public static Generator<Class<?>, TypeSpec.Builder> forClassViewModelBuilder(Environment environment){
+        return new ViewModelBuilderInnerClassGenerator(environment);
     }
 }

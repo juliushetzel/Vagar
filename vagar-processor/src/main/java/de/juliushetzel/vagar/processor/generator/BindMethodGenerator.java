@@ -30,9 +30,15 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
     @Override
     public MethodSpec.Builder generate(TypeElement annotatedElement) {
         ActivityAnnotation.Values values = ActivityAnnotation.getAnnotationValues(annotatedElement);
+
+        getEnvironment().getLog().note("%s -> Start generating %s method for annotated class %s",
+                getClass().getSimpleName(),
+                METHOD_NAME,
+                annotatedElement.getSimpleName());
+
         TypeName viewModelType = values.getViewModelTypeName();
 
-        return MethodSpec.methodBuilder(METHOD_NAME)
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_NAME)
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(TypeName.get(annotatedElement.asType()), "activity")
                 .addParameter(Bundle.getClassName(), "savedInstanceState")
@@ -48,6 +54,12 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
                 .addStatement("return binding")
                 .addTypeVariable(getReturnTypeVariableName())
                 .returns(getReturnTypeName());
+
+        getEnvironment().getLog().note("%s -> Generating %s method finished",
+                getClass().getSimpleName(),
+                annotatedElement.getSimpleName());
+
+        return builder;
     }
 
     private TypeName getBindingReferenceTypeName(){

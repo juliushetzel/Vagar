@@ -3,10 +3,8 @@ package de.juliushetzel.vagar.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import de.juliushetzel.vagar.Vagar;
 import de.juliushetzel.vagar.ViewModel;
 import de.juliushetzel.vagar.annotation.VagarActivity;
-import de.juliushetzel.vagar.sample.databinding.ActivityMainBinding;
 
 @VagarActivity(
         viewModel = MainViewModel.class,
@@ -14,12 +12,12 @@ import de.juliushetzel.vagar.sample.databinding.ActivityMainBinding;
 )
 public class MainActivity extends AppCompatActivity implements ViewModel.Factory<MainViewModel>{
 
-    ActivityMainBinding mActivityMainBinding;
+    //ActivityMainBinding mActivityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityMainBinding = Vagar.bind(this, savedInstanceState);
+        //mActivityMainBinding = Vagar.bind(this, savedInstanceState);
     }
 
 

@@ -10,7 +10,7 @@ import de.juliushetzel.vagar.processor.log.Log;
  */
 public interface Environment {
     String FRAMEWORK_ENTRY_POINT_CLASS_NAME = "Vagar";
-    String FRAMEWORK_ENTRY_POINT_PACKAGE = "de.juliushetzel.vagar";
+    String FRAMEWORK_BASE_PACKAGE = "de.juliushetzel.vagar";
 
     /**
      * @return The package path of the user using

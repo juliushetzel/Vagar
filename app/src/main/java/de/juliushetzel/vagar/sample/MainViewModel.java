@@ -6,6 +6,8 @@ import de.juliushetzel.vagar.ViewModel;
 
 public class MainViewModel implements ViewModel {
 
+    public MainViewModel(){}
+
     private int clicks = 0;
 
     private boolean mActive;

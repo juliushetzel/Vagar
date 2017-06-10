@@ -100,6 +100,10 @@ public final class ActivityAnnotation {
             return mViewModelTypeName;
         }
 
+        public Class<?> getViewModelClass() throws ClassNotFoundException {
+            return Class.forName(getViewModelTypeName().toString());
+        }
+
         public int getLayoutResourceId() {
             return mLayoutResourceId;
         }

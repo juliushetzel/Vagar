@@ -17,16 +17,16 @@ class LogImpl implements Log{
 
     @Override
     public void note(String message, Object... arguments) {
-        mMessager.printMessage(NOTE, String.format(message, arguments));
+        if(NOTE_ENABLED) mMessager.printMessage(NOTE, String.format(message, arguments));
     }
 
     @Override
     public void error(String message, Object... arguments) {
-        mMessager.printMessage(ERROR, String.format(message, arguments));
+        if(ERROR_ENABLED) mMessager.printMessage(ERROR, String.format(message, arguments));
     }
 
     @Override
     public void warning(String message, Object... arguments) {
-        mMessager.printMessage(WARNING, String.format(message, arguments));
+        if(WARNING_ENABLED) mMessager.printMessage(WARNING, String.format(message, arguments));
     }
 }

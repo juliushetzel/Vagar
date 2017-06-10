@@ -13,22 +13,29 @@ import de.juliushetzel.vagar.processor.environment.Environment;
 
 import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_ENTRY_POINT_CLASS_NAME;
 
-final class VagarClassGenerator extends Generator<List<TypeElement>, TypeSpec.Builder> {
+final class EntryPointClassGenerator extends Generator<List<TypeElement>, TypeSpec.Builder> {
 
-    protected VagarClassGenerator(Environment environment) {
+    protected EntryPointClassGenerator(Environment environment) {
         super(environment);
     }
 
     @Override
     public TypeSpec.Builder generate(List<TypeElement> annotatedElements) {
+        getEnvironment().getLog().note("%s -> Start generating entry point class %s",
+                getClass().getSimpleName(),
+                FRAMEWORK_ENTRY_POINT_CLASS_NAME);
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(FRAMEWORK_ENTRY_POINT_CLASS_NAME)
                 .addModifiers(Modifier.FINAL, Modifier.PUBLIC);
 
         annotatedElements.stream()
-                .map(Generator.bindMethodGenerator(getEnvironment())::generate)
+                .map(Generator.forMethodBind(getEnvironment())::generate)
                 .map(MethodSpec.Builder::build)
                 .forEach(builder::addMethod);
+
+        getEnvironment().getLog().note("%s -> Generating class %s finished",
+                getClass().getSimpleName(),
+                FRAMEWORK_ENTRY_POINT_CLASS_NAME);
 
         return builder;
     }

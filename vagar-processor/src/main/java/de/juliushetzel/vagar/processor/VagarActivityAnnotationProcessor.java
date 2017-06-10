@@ -4,6 +4,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -24,8 +25,7 @@ import de.juliushetzel.vagar.processor.exception.ActivityAnnotationClassNotFound
 import de.juliushetzel.vagar.processor.generator.Generator;
 
 import static com.squareup.javapoet.JavaFile.builder;
-import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_ENTRY_POINT_CLASS_NAME;
-import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_ENTRY_POINT_PACKAGE;
+import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PACKAGE;
 
 
 @SupportedAnnotationTypes( ActivityAnnotation.CLASS_PATH )
@@ -56,12 +56,21 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
                 return true;
             }
 
-            TypeSpec typeSpec = Generator
-                    .vagarClassGenerator(mEnvironment)
-                    .generate(annotatedElements)
-                    .build();
+            List<TypeSpec> generatedClasses = new ArrayList<>();
 
-            writeToFile(typeSpec);
+            /*generatedClasses.add(Generator
+                    .forClassViewModelBuilderContainer(mEnvironment)
+                    .generate(annotatedElements)
+                    .build());*/
+
+            generatedClasses.add(Generator
+                    .forClassVagar(mEnvironment)
+                    .generate(annotatedElements)
+                    .build());
+
+            for (TypeSpec typeSpec : generatedClasses) {
+                writeToFile(typeSpec);
+            }
 
         } catch (IOException e) {
             mEnvironment.getLog().error("%s -> Could not generate Class: %s",
@@ -98,18 +107,16 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
     }
 
     private void writeToFile(TypeSpec typeSpec) throws IOException {
-        JavaFile javaFile = builder(FRAMEWORK_ENTRY_POINT_PACKAGE, typeSpec).build();
-        mEnvironment.getLog().note("%s -> Attempting to write file %s.%s",
+        JavaFile javaFile = builder(FRAMEWORK_BASE_PACKAGE, typeSpec).build();
+        mEnvironment.getLog().note("%s -> Attempting to write file %s",
                 getClass().getSimpleName(),
-                FRAMEWORK_ENTRY_POINT_PACKAGE,
-                FRAMEWORK_ENTRY_POINT_CLASS_NAME);
+                typeSpec.name);
 
         javaFile.writeTo(processingEnv.getFiler());
 
-        mEnvironment.getLog().note("%s -> File %s.%s successfully written",
-                getClass().getSimpleName() ,
-                FRAMEWORK_ENTRY_POINT_PACKAGE,
-                FRAMEWORK_ENTRY_POINT_CLASS_NAME);
+        mEnvironment.getLog().note("%s -> File %s successfully written",
+                getClass().getSimpleName(),
+                typeSpec.name);
 
         mSuccessfullyGenerated = true;
     }
