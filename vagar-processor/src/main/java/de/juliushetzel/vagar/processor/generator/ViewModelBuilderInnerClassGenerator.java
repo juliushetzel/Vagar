@@ -15,7 +15,7 @@ import de.juliushetzel.vagar.processor.environment.Environment;
 
 import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PACKAGE;
 
-public class ViewModelBuilderInnerClassGenerator extends Generator<Class<?>, TypeSpec.Builder> {
+final class ViewModelBuilderInnerClassGenerator extends Generator<Class<?>, TypeSpec.Builder> {
 
     ViewModelBuilderInnerClassGenerator(Environment environment) {
         super(environment);

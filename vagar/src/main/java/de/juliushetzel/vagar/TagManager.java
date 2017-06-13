@@ -34,9 +34,10 @@ public final class TagManager {
      *                           which the viewModel should be bound to
      * @return the matching tag
      */
-     String getTag(@NonNull Activity activity,
+    String getTag(@NonNull Activity activity,
                          Bundle savedInstanceState){
         String tag = extractTag(savedInstanceState);
+        removeTag(savedInstanceState);
         if(tag == null){
             tag = getUniqueTag();
             setupNewTagRetainer(activity, tag);
@@ -46,7 +47,7 @@ public final class TagManager {
 
     private void setupNewTagRetainer(@NonNull Activity activity,
                                     @NonNull String newTag){
-        ActivityTagRetainingLifecycleCallbacks tagRetainingLifecycleCallbacks = new ActivityTagRetainingLifecycleCallbacks(
+        ActivityTagRetainer tagRetainingLifecycleCallbacks = new ActivityTagRetainer(
                 activity,
                 newTag
         );
@@ -58,6 +59,7 @@ public final class TagManager {
     String getTag(@NonNull Fragment fragment,
                          Bundle savedInstanceState){
         String tag = extractTag(savedInstanceState);
+        removeTag(savedInstanceState);
         if(tag == null){
             tag = getUniqueTag();
             setupNewTagRetainer(fragment, tag);
@@ -67,7 +69,7 @@ public final class TagManager {
 
     private void setupNewTagRetainer(@NonNull Fragment fragment,
                                      @NonNull String newTag){
-        FragmentTagRetainingLifecycleCallbacks tagRetainingLifecycleCallbacks = new FragmentTagRetainingLifecycleCallbacks(
+        FragmentTagRetainer tagRetainingLifecycleCallbacks = new FragmentTagRetainer(
                 fragment,
                 newTag
         );
@@ -76,12 +78,15 @@ public final class TagManager {
 
     /* for All */
 
-    private String extractTag(Bundle savedInstanceState){
+    static String extractTag(Bundle savedInstanceState){
         String tag = null;
         if(savedInstanceState != null){
             tag = savedInstanceState.getString(EXTRA_TAG_VIEW_MODEL_HOLDER);
-            savedInstanceState.remove(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER);
         }
         return tag;
+    }
+
+    private void removeTag(Bundle savedInstanceState){
+        savedInstanceState.remove(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER);
     }
 }

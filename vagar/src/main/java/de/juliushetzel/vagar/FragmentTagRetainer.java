@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-final class FragmentTagRetainingLifecycleCallbacks extends TagRetainingLifecycleCallbacks<Fragment>{
+final class FragmentTagRetainer extends TagRetainer<Fragment> {
     
-    FragmentTagRetainingLifecycleCallbacks(@NonNull Fragment target, @NonNull String tag) {
+    FragmentTagRetainer(@NonNull Fragment target, @NonNull String tag) {
         super(target, tag);
     }
 
@@ -19,17 +19,17 @@ final class FragmentTagRetainingLifecycleCallbacks extends TagRetainingLifecycle
     private final FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
         @Override
         public void onFragmentViewCreated(FragmentManager fragmentManager, Fragment fragment, View view, Bundle savedInstanceState) {
-            FragmentTagRetainingLifecycleCallbacks.super.onCreate(fragment, savedInstanceState);
+            FragmentTagRetainer.super.setReference(fragment, savedInstanceState);
         }
 
         @Override
         public void onFragmentSaveInstanceState(FragmentManager fragmentManager, Fragment fragment, Bundle outState) {
-            FragmentTagRetainingLifecycleCallbacks.super.onSaveInstanceState(fragment, outState);
+            FragmentTagRetainer.super.saveTag(fragment, outState);
         }
 
         @Override
         public void onFragmentDestroyed(FragmentManager fragmentManager, Fragment fragment) {
-            FragmentTagRetainingLifecycleCallbacks.super.onDestroy(fragment);
+            FragmentTagRetainer.super.clearReference(fragment);
         }
     };
     

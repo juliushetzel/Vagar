@@ -27,7 +27,7 @@ final class ViewModelBuilderContainerGenerator extends Generator<List<TypeElemen
                 .map(ActivityAnnotation::getAnnotationValues)
                 .collect(Collectors.toList());
 
-        for (ActivityAnnotation.Values values : annotationValues) {
+        /*for (ActivityAnnotation.Values values : annotationValues) {
             try {
                 builder.addType(Generator
                                 .forClassViewModelBuilder(getEnvironment())
@@ -38,7 +38,7 @@ final class ViewModelBuilderContainerGenerator extends Generator<List<TypeElemen
                         .getLog()
                         .error("%s -> Class %s was not found.", getClass(), values.getViewModelTypeName().toString());
             }
-        }
+        }*/
         return builder;
     }
 }

@@ -15,8 +15,8 @@ import javax.lang.model.type.TypeMirror;
 import de.juliushetzel.vagar.processor.exception.ActivityAnnotationClassNotFoundException;
 
 /**
- * This Class is to mimic the VagarActivity annotation
- * in de.juliushetzel.vagar.annotation package.
+ * This Class's purpose is to mimic the VagarActivity
+ * annotation in de.juliushetzel.vagar.annotation package.
  *
  * It is necessary due to the fact, that the
  * VagarActivity Annotation needs a reference to the
@@ -37,10 +37,9 @@ public final class ActivityAnnotation {
     private ActivityAnnotation(){}
 
     /**
-     * return the de.juliushetzel.vagar.annotation.VagarActivity class.
      * suppresses Warning cause we know it is going to be there!
      * @param <T>
-     * @return
+     * @return The de.juliushetzel.vagar.annotation.VagarActivity class.
      * @throws ActivityAnnotationClassNotFoundException
      */
     @SuppressWarnings("unchecked")
@@ -57,9 +56,8 @@ public final class ActivityAnnotation {
     }
 
     /**
-     * Returns the values given in the "real" annotation by the user.
      * @param annotatedClass
-     * @return
+     * @return The values given in the "real" annotation by the user.
      */
     public static Values getAnnotationValues(TypeElement annotatedClass){
         return new Values(annotatedClass);
@@ -98,10 +96,6 @@ public final class ActivityAnnotation {
 
         public TypeName getViewModelTypeName() {
             return mViewModelTypeName;
-        }
-
-        public Class<?> getViewModelClass() throws ClassNotFoundException {
-            return Class.forName(getViewModelTypeName().toString());
         }
 
         public int getLayoutResourceId() {

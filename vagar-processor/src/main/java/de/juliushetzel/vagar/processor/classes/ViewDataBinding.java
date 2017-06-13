@@ -4,10 +4,9 @@ package de.juliushetzel.vagar.processor.classes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 /**
- * This Class is to mimic the ViewDataBinding class
- * from android.databinding package, as annotation
- * processing is not supported by the android
- * library.
+ * This Class's purpose  is to mimic the ViewDataBinding
+ * class from android.databinding package, as annotation
+ * processing is not supported by the android library.
  */
 public final class ViewDataBinding {
     public static final String PACKAGE_PATH = "android.databinding";

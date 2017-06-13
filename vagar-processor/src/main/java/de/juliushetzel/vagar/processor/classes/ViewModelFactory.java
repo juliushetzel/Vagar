@@ -4,12 +4,12 @@ package de.juliushetzel.vagar.processor.classes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 /**
- * This Class is to mimic the ViewModel.Factory class
- * from de.juliushetzel.vagar package.
+ * This Class's purpose is to mimic the ViewModel.Factory
+ * class from de.juliushetzel.vagar package.
  *
- * It is necessary due to the fact, that the
- * Vagar core framework needs a reference to the
- * Android Library which is not supporting annotation
+ * It is necessary due to the fact, that the Vagar
+ * core framework needs a reference to the Android
+ * Library which is not supporting annotation
  * processing.
  */
 public final class ViewModelFactory {

@@ -5,33 +5,34 @@ import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
-abstract class TagRetainingLifecycleCallbacks<T>{
+abstract class TagRetainer<T>{
     private final String mTag;
     private WeakReference<T> mTargetReference;
 
-    TagRetainingLifecycleCallbacks(@NonNull T target,
-                                          @NonNull String tag) {
+    TagRetainer(@NonNull T target,
+                @NonNull String tag) {
         mTargetReference = new WeakReference<>(target);
         mTag = tag;
     }
 
-    final void onCreate(T target, Bundle savedInstanceState){
+    final void setReference(T target, Bundle savedInstanceState){
         if(containsTag(savedInstanceState)){
             mTargetReference = new WeakReference<>(target);
         }
     }
 
-    final void onSaveInstanceState(T target, Bundle outState){
+    final void saveTag(T target, Bundle outState){
         if(isTarget(target)){
             outState.putString(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER, mTag);
-            mTargetReference.clear();
         }
     }
 
-    final void onDestroy(T target){
-        if(mTargetReference.get() == target){
+    final void clearReference(T target){
+        if(isTarget(target)){
             mTargetReference.clear();
         }
+
+        // GLOBALEN TAG RETAINER!!!!! singleton
     }
 
     private boolean containsTag(Bundle savedInstanceState){

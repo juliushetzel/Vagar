@@ -4,8 +4,8 @@ package de.juliushetzel.vagar.processor.classes;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
 /**
- * This Class is to mimic the Bundle class
- * from android.os package, as annotation
+ * This Class's purpose is to mimic the Bundle
+ * class from android.os package, as annotation
  * processing is not supported by the android
  * library.
  */
