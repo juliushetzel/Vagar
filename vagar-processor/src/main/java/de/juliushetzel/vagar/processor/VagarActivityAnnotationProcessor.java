@@ -64,7 +64,7 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
                     .build());*/
 
             generatedClasses.add(Generator
-                    .forClassVagar(mEnvironment)
+                    .forEntryPointClass(mEnvironment)
                     .generate(annotatedElements)
                     .build());
 

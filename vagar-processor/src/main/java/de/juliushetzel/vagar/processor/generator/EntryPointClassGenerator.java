@@ -29,7 +29,7 @@ final class EntryPointClassGenerator extends Generator<List<TypeElement>, TypeSp
                 .addModifiers(Modifier.FINAL, Modifier.PUBLIC);
 
         annotatedElements.stream()
-                .map(Generator.forMethodBind(getEnvironment())::generate)
+                .map(Generator.forBindingMethod(getEnvironment())::generate)
                 .map(MethodSpec.Builder::build)
                 .forEach(builder::addMethod);
 

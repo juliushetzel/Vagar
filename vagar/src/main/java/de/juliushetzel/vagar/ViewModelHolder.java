@@ -13,7 +13,7 @@ public final class ViewModelHolder<T extends ViewModel> extends Fragment {
     /**
      * Creates a new @link{ViewModelHolder} instance
      * @param viewModel the retaining mViewModel
-     * @return an ViewModelHolder instance to retain the mViewModel
+     * @return an ViewModelHolder instance to addTagReferencePair the mViewModel
      */
     static <T extends ViewModel> ViewModelHolder<T> newInstance(T viewModel){
         ViewModelHolder<T> viewModelHolder = new ViewModelHolder<>();

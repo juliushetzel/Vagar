@@ -1,33 +1,77 @@
 package de.juliushetzel.vagar.databinding;
 
 
-import android.databinding.ObservableField;
-import android.support.annotation.Nullable;
+import android.databinding.BaseObservable;
 import android.support.v4.util.Pair;
 
-public class ObservablePair<F, S> extends ObservableField<Pair<F, S>> {
+public class ObservablePair<F, S> extends BaseObservable {
+    static final long serialVersionUID = 1L;
+    private Pair<F, S> mPair;
 
+    /**
+     * Wraps the given objects and creates an observable object
+     *
+     * @param first The first value of the pair to be wrapped as an observable.
+     * @param second The second value of the pair to be wrapped as an observable.
+     */
+    public ObservablePair(F first, S second) {
+        this(new Pair<>(first, second));
+    }
+
+    /**
+     * Wraps the given object and creates an observable object
+     *
+     * @param pair The pair to be wrapped as an observable.
+     */
+    public ObservablePair(Pair<F, S> pair) {
+        mPair = pair;
+    }
+
+    /**
+     * Creates an empty observable object
+     */
     public ObservablePair(){
         super();
     }
 
-    public ObservablePair(@Nullable Pair<F,S> pair){
-        super(pair);
+    /**
+     * @return the stored pair.
+     */
+    public Pair<F, S> get() {
+        return mPair;
     }
 
-    public ObservablePair(@Nullable F first, @Nullable S second){
-        this(new Pair<>(first, second));
-    }
-
-    public void set(@Nullable F first, @Nullable S second){
-        set(new Pair<>(first, second));
-    }
-
+    /**
+     * @return the first value of the stored pair.
+     */
     public F getFirst(){
         return get().first;
     }
 
+    /**
+     * @return the second value of the stored pair.
+     */
     public S getSecond(){
         return get().second;
+    }
+
+    /**
+     * Set the stored pair.
+     */
+    public void set(Pair<F, S> pair) {
+        if (pair != mPair) {
+            mPair = pair;
+            notifyChange();
+        }
+    }
+
+    /**
+     * Set the stored pair.
+     *
+     * @param first The first value of the pair.
+     * @param second The second value of the pair.
+     */
+    public void set(F first, S second){
+        set(new Pair<>(first, second));
     }
 }

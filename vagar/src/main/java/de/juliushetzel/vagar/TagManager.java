@@ -12,6 +12,9 @@ public final class TagManager {
     private static final String TAG_PREFIX = "ViewModelBinder:internal:view_model_holder_";
     private static final AtomicLong NEXT_TAG = new AtomicLong(0);
 
+    private final BundleTagInjector<Activity> mActivityBundleTagInjector = new ActivityBundleTagInjector(EXTRA_TAG_VIEW_MODEL_HOLDER);
+    //private final BundleTagInjector<Fragment> mFragmentBundleTagInjector = new BundleTagInjector<>(EXTRA_TAG_VIEW_MODEL_HOLDER);
+
     /**
      * @return a unique String tag
      */
@@ -27,7 +30,7 @@ public final class TagManager {
 
     /**
      * Returns the matching tag for the viewModel or creates a new
-     * ActivityLifecycleCallbacks subclass which will retain the tag,
+     * ActivityLifecycleCallbacks subclass which will addTagReferencePair the tag,
      * and registers it
      * @param activity the activity which the viewModel should be bound to
      * @param savedInstanceState the SavedInstanceState of the activity
@@ -40,18 +43,9 @@ public final class TagManager {
         removeTag(savedInstanceState);
         if(tag == null){
             tag = getUniqueTag();
-            setupNewTagRetainer(activity, tag);
+            mActivityBundleTagInjector.registerForInjection(activity, tag);
         }
         return tag;
-    }
-
-    private void setupNewTagRetainer(@NonNull Activity activity,
-                                    @NonNull String newTag){
-        ActivityTagRetainer tagRetainingLifecycleCallbacks = new ActivityTagRetainer(
-                activity,
-                newTag
-        );
-        activity.getApplication().registerActivityLifecycleCallbacks(tagRetainingLifecycleCallbacks);
     }
 
     /* for Fragment */
@@ -62,18 +56,18 @@ public final class TagManager {
         removeTag(savedInstanceState);
         if(tag == null){
             tag = getUniqueTag();
-            setupNewTagRetainer(fragment, tag);
+            addToTagRetainer(fragment, tag);
         }
         return tag;
     }
 
-    private void setupNewTagRetainer(@NonNull Fragment fragment,
-                                     @NonNull String newTag){
-        FragmentTagRetainer tagRetainingLifecycleCallbacks = new FragmentTagRetainer(
+    private void addToTagRetainer(@NonNull Fragment fragment,
+                                  @NonNull String newTag){
+        /*FragmentTagRetainerOLD tagRetainingLifecycleCallbacks = new FragmentTagRetainerOLD(
                 fragment,
                 newTag
         );
-        fragment.getFragmentManager().registerFragmentLifecycleCallbacks(tagRetainingLifecycleCallbacks.asCallbacks(), false);
+        fragment.getFragmentManager().registerFragmentLifecycleCallbacks(tagRetainingLifecycleCallbacks.asCallbacks(), false);*/
     }
 
     /* for All */
@@ -87,6 +81,8 @@ public final class TagManager {
     }
 
     private void removeTag(Bundle savedInstanceState){
-        savedInstanceState.remove(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER);
+        if(savedInstanceState != null) {
+            savedInstanceState.remove(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER);
+        }
     }
 }

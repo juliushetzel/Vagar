@@ -1,22 +1,25 @@
 package de.juliushetzel.vagar.processor.classes;
 
 
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeName;
 /**
  * This Class's purpose is to mimic the Bundle
  * class from android.os package, as annotation
  * processing is not supported by the android
  * library.
  */
-public final class Bundle {
-    public static final String PACKAGE_PATH = "android.os";
-    public static final String CLASS_NAME = "Bundle";
-    public static final String CLASS_PATH = PACKAGE_PATH + "." + CLASS_NAME;
+final class Bundle extends MimickedClass{
+    private static final String PACKAGE_PATH = "android.os";
+    private static final String CLASS_NAME = "Bundle";
 
-    private Bundle(){}
+    Bundle(){}
 
-    public static TypeName getClassName(){
-        return ClassName.get(PACKAGE_PATH, CLASS_NAME);
+    @Override
+    public String getPackagePath() {
+        return PACKAGE_PATH;
+    }
+
+    @Override
+    public String getSimpleClassName() {
+        return CLASS_NAME;
     }
 }

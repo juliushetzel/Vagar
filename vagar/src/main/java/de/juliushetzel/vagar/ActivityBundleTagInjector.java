@@ -5,19 +5,29 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
-final class ActivityTagRetainer extends TagRetainer<Activity> implements Application.ActivityLifecycleCallbacks{
-    private static final String TAG = ActivityTagRetainer.class.getSimpleName();
+final class ActivityBundleTagInjector extends BundleTagInjector<Activity> implements Application.ActivityLifecycleCallbacks{
+    private static final String TAG = ActivityBundleTagInjector.class.getSimpleName();
     private static final boolean DEBUG = true;
 
-    public ActivityTagRetainer(Activity target,
-                               String tag) {
-        super(target, tag);
+    private boolean isRegisteredToActivityCallbacks = false;
+
+    ActivityBundleTagInjector(String bundleTagKey) {
+        super(bundleTagKey);
+    }
+
+    @Override
+    void registerForInjection(Activity target, String tag) {
+        super.registerForInjection(target, tag);
+        if(!isRegisteredToActivityCallbacks){
+            target.getApplication().registerActivityLifecycleCallbacks(this);
+            isRegisteredToActivityCallbacks = true;
+        }
     }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         if(DEBUG) Log.d(TAG, "onActivityCreated, " + activity.getClass().getSimpleName());
-        super.setReference(activity, savedInstanceState);
+        super.referenceTarget(activity, savedInstanceState);
     }
 
     @Override
@@ -39,22 +49,23 @@ final class ActivityTagRetainer extends TagRetainer<Activity> implements Applica
     public void onActivityStopped(Activity activity) {
         if(DEBUG) Log.d(TAG, "onActivityStopped, " + activity.getClass().getSimpleName());
         if(activity.isChangingConfigurations()) {
-            super.clearReference(activity);
+            super.dereference(activity);
         }
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
         if(DEBUG) Log.d(TAG, "onActivitySaveInstanceState, " + activity.getClass().getSimpleName());
-        super.saveTag(activity, outState);
+        super.injectTag(activity, outState);
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
         if(DEBUG) Log.d(TAG, "onActivityDestroyed, " + activity.getClass().getSimpleName());
-        super.clearReference(activity);
-        if(!activity.isChangingConfigurations()){
-            activity.getApplication().unregisterActivityLifecycleCallbacks(this);
+        super.dereference(activity);
+        if(activity.isFinishing()){
+            super.unregisterFromInjection(activity);
         }
+        //TODO if isFinishing or not isChangingConfiguration -> delete map??
     }
 }

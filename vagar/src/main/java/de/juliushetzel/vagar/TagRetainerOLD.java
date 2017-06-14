@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
-abstract class TagRetainer<T>{
+abstract class TagRetainerOLD<T>{
     private final String mTag;
     private WeakReference<T> mTargetReference;
 
-    TagRetainer(@NonNull T target,
-                @NonNull String tag) {
+    TagRetainerOLD(@NonNull T target,
+                   @NonNull String tag) {
         mTargetReference = new WeakReference<>(target);
         mTag = tag;
     }

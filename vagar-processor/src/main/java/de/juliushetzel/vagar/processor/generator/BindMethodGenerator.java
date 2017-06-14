@@ -9,8 +9,7 @@ import com.squareup.javapoet.TypeVariableName;
 import javax.lang.model.element.TypeElement;
 
 import de.juliushetzel.vagar.processor.classes.ActivityAnnotation;
-import de.juliushetzel.vagar.processor.classes.Bundle;
-import de.juliushetzel.vagar.processor.classes.DataBindingUtil;
+import de.juliushetzel.vagar.processor.classes.MimickedClass;
 import de.juliushetzel.vagar.processor.classes.ViewDataBinding;
 import de.juliushetzel.vagar.processor.classes.ViewModelBinder;
 import de.juliushetzel.vagar.processor.classes.ViewModelFactory;
@@ -41,8 +40,8 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
         MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_NAME)
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(TypeName.get(annotatedElement.asType()), "activity")
-                .addParameter(Bundle.getClassName(), "savedInstanceState")
-                .addStatement("$L binding = $T.setContentView(activity, $L)", GENERIC_BINDING, DataBindingUtil.getClassName(), values.getLayoutResourceId())
+                .addParameter(MimickedClass.BUNDLE.getClassName(), "savedInstanceState")
+                .addStatement("$L binding = $T.setContentView(activity, $L)", GENERIC_BINDING, MimickedClass.DATA_BINDING_UTIL.getClassName(), values.getLayoutResourceId())
                 .addCode("$T<$T> factory = new $T<$T>(){\n", ViewModelFactory.getClassName(), viewModelType, ViewModelFactory.getClassName(), viewModelType)
                 .addCode("\t@Override\n")
                 .addCode("\tpublic $T createViewModel(){\n", viewModelType)

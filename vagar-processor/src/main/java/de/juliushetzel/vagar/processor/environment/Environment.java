@@ -25,7 +25,7 @@ public interface Environment {
 
     /**
      * @param processingEnvironment
-     * @return An new Implementation of the Environment;
+     * @return A new Implementation of the Processor Environment;
      */
     static Environment newImplementation(ProcessingEnvironment processingEnvironment){
         return new EnvironmentImpl(processingEnvironment);

@@ -38,7 +38,7 @@ public abstract class Generator<I, O> {
      *
      * @return Generator for the binding method
      */
-    public static Generator<TypeElement, MethodSpec.Builder> forMethodBind(Environment environment){
+    public static Generator<TypeElement, MethodSpec.Builder> forBindingMethod(Environment environment){
         return new BindMethodGenerator(environment);
     }
 
@@ -47,7 +47,7 @@ public abstract class Generator<I, O> {
      *
      * @return Generator for the entry point class
      */
-    public static Generator<List<TypeElement>, TypeSpec.Builder> forClassVagar(Environment environment){
+    public static Generator<List<TypeElement>, TypeSpec.Builder> forEntryPointClass(Environment environment){
         return new EntryPointClassGenerator(environment);
     }
 }
