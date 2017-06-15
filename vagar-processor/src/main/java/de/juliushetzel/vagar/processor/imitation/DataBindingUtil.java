@@ -1,4 +1,4 @@
-package de.juliushetzel.vagar.processor.classes;
+package de.juliushetzel.vagar.processor.imitation;
 
 
 /**
@@ -6,7 +6,7 @@ package de.juliushetzel.vagar.processor.classes;
  * class from android.databinding package, as annotation
  * processing is not supported by the android library.
  */
-final class DataBindingUtil extends MimickedClass{
+final class DataBindingUtil implements ImitatedClass {
     private static final String PACKAGE_PATH = "android.databinding";
     private static final String CLASS_NAME = "DataBindingUtil";
 

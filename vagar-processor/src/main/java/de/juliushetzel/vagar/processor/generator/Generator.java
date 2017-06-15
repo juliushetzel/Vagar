@@ -23,7 +23,7 @@ import de.juliushetzel.vagar.processor.environment.Environment;
 public abstract class Generator<I, O> {
     private final Environment mEnvironment;
 
-    Generator(Environment environment){
+    private Generator(Environment environment){
         mEnvironment = environment;
     }
 

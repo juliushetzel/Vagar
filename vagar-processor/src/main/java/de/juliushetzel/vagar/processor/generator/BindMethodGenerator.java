@@ -8,11 +8,8 @@ import com.squareup.javapoet.TypeVariableName;
 
 import javax.lang.model.element.TypeElement;
 
-import de.juliushetzel.vagar.processor.classes.ActivityAnnotation;
-import de.juliushetzel.vagar.processor.classes.MimickedClass;
-import de.juliushetzel.vagar.processor.classes.ViewDataBinding;
-import de.juliushetzel.vagar.processor.classes.ViewModelBinder;
-import de.juliushetzel.vagar.processor.classes.ViewModelFactory;
+import de.juliushetzel.vagar.processor.imitation.ActivityAnnotation;
+import de.juliushetzel.vagar.processor.imitation.ImitatedClass;
 import de.juliushetzel.vagar.processor.environment.Environment;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -40,15 +37,15 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
         MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_NAME)
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(TypeName.get(annotatedElement.asType()), "activity")
-                .addParameter(MimickedClass.BUNDLE.getClassName(), "savedInstanceState")
-                .addStatement("$L binding = $T.setContentView(activity, $L)", GENERIC_BINDING, MimickedClass.DATA_BINDING_UTIL.getClassName(), values.getLayoutResourceId())
-                .addCode("$T<$T> factory = new $T<$T>(){\n", ViewModelFactory.getClassName(), viewModelType, ViewModelFactory.getClassName(), viewModelType)
+                .addParameter(ImitatedClass.BUNDLE.getClassName(), "savedInstanceState")
+                .addStatement("$L binding = $T.setContentView(activity, $L)", GENERIC_BINDING, ImitatedClass.DATA_BINDING_UTIL.getClassName(), values.getLayoutResourceId())
+                .addCode("$T<$T> factory = new $T<$T>(){\n", ImitatedClass.VIEW_MODEL_FACTORY.getClassName(), viewModelType, ImitatedClass.VIEW_MODEL_FACTORY.getClassName(), viewModelType)
                 .addCode("\t@Override\n")
                 .addCode("\tpublic $T createViewModel(){\n", viewModelType)
                 .addStatement("\t\treturn new $T()", viewModelType)
                 .addCode("\t}\n")
                 .addStatement("}")
-                .addStatement("$T viewModel = $T.bind(activity, factory, savedInstanceState)", viewModelType, ViewModelBinder.getClassName())
+                .addStatement("$T viewModel = $T.bind(activity, factory, savedInstanceState)", viewModelType, ImitatedClass.VIEW_MODEL_BINDER.getClassName())
                 .addStatement("binding.setVariable($T.$L, viewModel)", getBindingReferenceTypeName(), values.getViewModelTag())
                 .addStatement("return binding")
                 .addTypeVariable(getReturnTypeVariableName())
@@ -66,7 +63,7 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
     }
 
     private TypeVariableName getReturnTypeVariableName(){
-        return TypeVariableName.get(GENERIC_BINDING, ViewDataBinding.getClassName());
+        return TypeVariableName.get(GENERIC_BINDING, ImitatedClass.VIEW_DATA_BINDING.getClassName());
     }
 
     private TypeName getReturnTypeName(){

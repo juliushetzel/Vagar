@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
-import de.juliushetzel.vagar.processor.classes.ActivityAnnotation;
+import de.juliushetzel.vagar.processor.imitation.ActivityAnnotation;
 import de.juliushetzel.vagar.processor.environment.Environment;
 
 final class ViewModelBuilderContainerGenerator extends Generator<List<TypeElement>, TypeSpec.Builder> {

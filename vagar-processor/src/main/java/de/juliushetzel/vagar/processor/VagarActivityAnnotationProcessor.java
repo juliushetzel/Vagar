@@ -19,7 +19,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
-import de.juliushetzel.vagar.processor.classes.ActivityAnnotation;
+import de.juliushetzel.vagar.processor.imitation.ActivityAnnotation;
 import de.juliushetzel.vagar.processor.environment.Environment;
 import de.juliushetzel.vagar.processor.exception.ActivityAnnotationClassNotFoundException;
 import de.juliushetzel.vagar.processor.generator.Generator;

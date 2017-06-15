@@ -1,4 +1,4 @@
-package de.juliushetzel.vagar.processor.classes;
+package de.juliushetzel.vagar.processor.imitation;
 
 
 /**
@@ -7,7 +7,7 @@ package de.juliushetzel.vagar.processor.classes;
  * processing is not supported by the android
  * library.
  */
-final class Bundle extends MimickedClass{
+final class Bundle implements ImitatedClass {
     private static final String PACKAGE_PATH = "android.os";
     private static final String CLASS_NAME = "Bundle";
 

@@ -1,4 +1,4 @@
-package de.juliushetzel.vagar.processor.classes;
+package de.juliushetzel.vagar.processor.imitation;
 
 
 import com.squareup.javapoet.ClassName;
