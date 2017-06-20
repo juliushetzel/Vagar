@@ -1,5 +1,6 @@
 package de.juliushetzel.vagar.annotation;
 
+
 import android.support.annotation.LayoutRes;
 
 import java.lang.annotation.ElementType;
@@ -7,11 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import de.juliushetzel.vagar.Navigator;
 import de.juliushetzel.vagar.ViewModel;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
-public @interface VagarActivity {
+public @interface VagarActivityWithNavigator {
 
     Class<? extends ViewModel> viewModel();
 
@@ -20,4 +22,7 @@ public @interface VagarActivity {
 
     String viewModelTag() default "viewModel";
 
+    Class<? extends Navigator> navigator();
+
+    abstract class Unassigned extends Navigator{}
 }

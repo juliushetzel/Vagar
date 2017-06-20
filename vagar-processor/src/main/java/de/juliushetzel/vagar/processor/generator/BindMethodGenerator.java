@@ -19,7 +19,7 @@ final class BindMethodGenerator extends Generator<TypeElement, MethodSpec.Builde
     private static final String GENERIC_BINDING = "B";
     private static final String METHOD_NAME = "bind";
 
-    protected BindMethodGenerator(Environment environment) {
+    BindMethodGenerator(Environment environment) {
         super(environment);
     }
 

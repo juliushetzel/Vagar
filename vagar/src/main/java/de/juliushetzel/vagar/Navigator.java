@@ -10,28 +10,33 @@ import java.lang.ref.WeakReference;
 
 import de.juliushetzel.vagar.databinding.ObservablePair;
 
-public abstract class Navigator extends Observable.OnPropertyChangedCallback {
+public abstract class Navigator<A extends Activity> extends Observable.OnPropertyChangedCallback {
 
-    private WeakReference<Context> mContextReference;
-
-    void attachContext(Context context){
-        mContextReference = new WeakReference<>(context);
+    private WeakReference<A> mActivityReference;
+    // make package local only!! //
+    public void attachActivity(A activity){
+        mActivityReference = new WeakReference<>(activity);
     }
 
-    void detachContext(){
-        mContextReference.clear();
+    public void detachActivity(){
+        mActivityReference.clear();
     }
 
-    protected abstract void navigateTo(Context context,
-                    Class<? extends Activity> activity,
-                    Bundle bundle);
+    protected Context getContext(){
+       return mActivityReference.get();
+    }
+
+    protected A getActivity(){
+        return mActivityReference.get();
+    }
+
+    public abstract void navigateTo(Class<? extends Activity> activity, Bundle bundle);
 
     @Override
     public void onPropertyChanged(Observable observable, int i) {
         ObservablePair<Class<? extends Activity>, Bundle> navigationObservable
                 = (ObservablePair<Class<? extends Activity>, Bundle>) observable;
-        navigateTo(mContextReference.get(),
-                navigationObservable.getFirst(),
+        navigateTo(navigationObservable.getFirst(),
                 navigationObservable.getSecond());
     }
 }

@@ -1,26 +1,24 @@
 package de.juliushetzel.sample;
 
 import android.databinding.ObservableField;
-import android.os.Bundle;
 
-import de.juliushetzel.vagar.ViewModel;
-import de.juliushetzel.vagar.databinding.ObservablePair;
 import de.juliushetzel.sample.second.OtherActivity;
+import de.juliushetzel.vagar.ViewModel;
+import de.juliushetzel.vagar.extension.BaseViewModel;
 
-public class MainViewModel implements ViewModel {
+public class MainViewModel extends BaseViewModel implements ViewModel {
 
     public MainViewModel(){}
 
     public final ObservableField<String> text = new ObservableField<>("NEU");
     public final ObservableField<String> memoryAddress = new ObservableField<>("...");
-    public final ObservablePair<Class<?>, Bundle> navigationObservable = new ObservablePair<>();
 
     public void doSth(){
 
     }
 
     public void swapActivity(){
-        navigationObservable.set(OtherActivity.class, null);
+        navigateTo(OtherActivity.class, null);
     }
 
     @Override
