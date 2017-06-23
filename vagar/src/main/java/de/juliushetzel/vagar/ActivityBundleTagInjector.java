@@ -63,9 +63,5 @@ final class ActivityBundleTagInjector extends BundleTagInjector<Activity> implem
     public void onActivityDestroyed(Activity activity) {
         if(DEBUG) Log.d(TAG, "onActivityDestroyed, " + activity.getClass().getSimpleName());
         super.dereference(activity);
-        if(activity.isFinishing()){
-            super.unregisterFromInjection(activity);
-        }
-        //TODO if isFinishing or not isChangingConfiguration -> delete map??
     }
 }

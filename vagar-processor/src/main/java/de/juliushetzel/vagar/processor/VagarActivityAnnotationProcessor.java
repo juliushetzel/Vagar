@@ -19,16 +19,18 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
-import de.juliushetzel.vagar.processor.imitation.ActivityAnnotation;
 import de.juliushetzel.vagar.processor.environment.Environment;
-import de.juliushetzel.vagar.processor.exception.ActivityAnnotationClassNotFoundException;
+import de.juliushetzel.vagar.processor.exception.MissingClassInheritanceException;
+import de.juliushetzel.vagar.processor.exception.VagarAnnotationClassNotFound;
+import de.juliushetzel.vagar.processor.exception.WrongTypeAnnotatedException;
 import de.juliushetzel.vagar.processor.generator.Generator;
+import de.juliushetzel.vagar.processor.imitation.Imitations;
 
 import static com.squareup.javapoet.JavaFile.builder;
 import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PACKAGE;
 
 
-@SupportedAnnotationTypes( ActivityAnnotation.CLASS_PATH )
+@SupportedAnnotationTypes( "de.juliushetzel.vagar.annotation.Vagar" )
 @SupportedSourceVersion( SourceVersion.RELEASE_7 )
 public class VagarActivityAnnotationProcessor extends AbstractProcessor {
 
@@ -55,13 +57,13 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
             if(annotatedElements.isEmpty()){
                 return true;
             }
+            mEnvironment.getInheritanceChecker().checkInheritance(
+                    annotatedElements,
+                    Imitations.Classes.ACTIVITY,
+                    Imitations.Classes.FRAGMENT
+            );
 
             List<TypeSpec> generatedClasses = new ArrayList<>();
-
-            /*generatedClasses.add(Generator
-                    .forClassViewModelBuilderContainer(mEnvironment)
-                    .generate(annotatedElements)
-                    .build());*/
 
             generatedClasses.add(Generator
                     .forEntryPointClass(mEnvironment)
@@ -77,22 +79,24 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
                     getClass().getSimpleName(),
                     e.getMessage());
 
-        } catch (ActivityAnnotationClassNotFoundException e) {
-            mEnvironment.getLog().error("%s -> ActivityAnnotation class not found: %s",
+        } catch (VagarAnnotationClassNotFound e) {
+            mEnvironment.getLog().error("%s -> Vagar Annotation not found: %s",
                     getClass().getSimpleName(),
                     e.getMessage());
+        } catch (MissingClassInheritanceException e){
+            throw new WrongTypeAnnotatedException(Imitations.Annotations.VAGAR, e);
         }
 
         return true;
     }
 
-    private List<TypeElement> extractAnnotatedClasses(RoundEnvironment roundEnv) throws ActivityAnnotationClassNotFoundException {
+    private List<TypeElement> extractAnnotatedClasses(RoundEnvironment roundEnv) throws VagarAnnotationClassNotFound {
         mEnvironment.getLog().note("%s -> Extracting classes annotated with %s",
                 getClass().getSimpleName(),
-                ActivityAnnotation.CLASS_PATH);
+                Imitations.Annotations.VAGAR.getClassPath());
 
         List<TypeElement> annotatedElements = roundEnv
-                .getElementsAnnotatedWith(ActivityAnnotation.getAnnotationClass())
+                .getElementsAnnotatedWith(Imitations.Annotations.VAGAR.getAnnotationClass())
                 .stream()
                 .filter((element) -> element.getKind().isClass())
                 .map((Function<Element, TypeElement>) element -> (TypeElement) element)
@@ -101,7 +105,7 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
         mEnvironment.getLog().note("%s -> Found %s classes annotated with %s",
                 getClass().getSimpleName(),
                 annotatedElements.size(),
-                ActivityAnnotation.CLASS_PATH);
+                Imitations.Annotations.VAGAR.getClassPath());
 
         return annotatedElements;
     }

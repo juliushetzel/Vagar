@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.processing.ProcessingEnvironment;
 
+import de.juliushetzel.vagar.processor.conditions.InheritanceChecker;
 import de.juliushetzel.vagar.processor.log.Log;
 
 /**
@@ -12,14 +13,18 @@ import de.juliushetzel.vagar.processor.log.Log;
  */
 class EnvironmentImpl implements Environment{
     private static final String OPTIONS_KEY_MODULE_PACKAGE = "android.databinding.modulePackage";
+    private final ProcessingEnvironment mProcessingEnvironment;
+    private final InheritanceChecker mInheritanceChecker;
 
     private Log mLog;
 
     private Map<String, String> mOptions;
 
     EnvironmentImpl(ProcessingEnvironment processingEnvironment){
-        mLog = Log.newImplementation(processingEnvironment.getMessager());
-        mOptions = processingEnvironment.getOptions();
+        mProcessingEnvironment = processingEnvironment;
+        mLog = Log.newImplementation(mProcessingEnvironment.getMessager());
+        mOptions = mProcessingEnvironment.getOptions();
+        mInheritanceChecker = InheritanceChecker.newImplementation(mProcessingEnvironment);
     }
 
     @Override
@@ -30,5 +35,15 @@ class EnvironmentImpl implements Environment{
     @Override
     public Log getLog() {
         return mLog;
+    }
+
+    @Override
+    public InheritanceChecker getInheritanceChecker() {
+        return mInheritanceChecker;
+    }
+
+    @Override
+    public ProcessingEnvironment getProcessingEnvironment() {
+        return mProcessingEnvironment;
     }
 }

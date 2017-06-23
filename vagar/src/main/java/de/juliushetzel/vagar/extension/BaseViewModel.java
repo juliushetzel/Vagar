@@ -8,7 +8,7 @@ import de.juliushetzel.vagar.Navigator;
 import de.juliushetzel.vagar.ViewModel;
 import de.juliushetzel.vagar.databinding.ObservablePair;
 
-public abstract class BaseViewModel implements ViewModel {
+public abstract class BaseViewModel extends ViewModel {
 
     private final ObservablePair<Class<? extends Activity>, Bundle> mNavigationObservable = new ObservablePair<>();
 

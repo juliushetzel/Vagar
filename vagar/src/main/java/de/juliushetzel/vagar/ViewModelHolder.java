@@ -2,7 +2,7 @@ package de.juliushetzel.vagar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 
 public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extends Fragment {
     private T mViewModel;

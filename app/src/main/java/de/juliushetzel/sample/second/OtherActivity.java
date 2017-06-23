@@ -7,15 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.ActivityOtherBinding;
-import de.juliushetzel.vagar.Vagar;
-import de.juliushetzel.vagar.annotation.VagarActivity;
+import de.juliushetzel.vagar.ViewModel;
+import de.juliushetzel.vagar.annotation.Vagar;
 
-@VagarActivity(
+@Vagar(
         viewModel = OtherViewModel.class,
         layout = R.layout.activity_other,
         viewModelTag = "exampleTag"
 )
-public class OtherActivity extends AppCompatActivity{
+public class OtherActivity extends AppCompatActivity implements ViewModel.Factory<OtherViewModel>{
 
     private ActivityOtherBinding mViewBinding;
     private Observable.OnPropertyChangedCallback mNavigationListener;
@@ -23,7 +23,7 @@ public class OtherActivity extends AppCompatActivity{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewBinding = Vagar.bind(this, savedInstanceState);
+        mViewBinding = de.juliushetzel.vagar.Vagar.bind(this, this);
     }
 
     @Override
@@ -45,5 +45,10 @@ public class OtherActivity extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
         mViewBinding.getExampleTag().navigationObservable.removeOnPropertyChangedCallback(mNavigationListener);
+    }
+
+    @Override
+    public OtherViewModel createViewModel() {
+        return new OtherViewModel();
     }
 }

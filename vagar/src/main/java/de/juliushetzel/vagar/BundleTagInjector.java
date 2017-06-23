@@ -60,7 +60,7 @@ abstract class BundleTagInjector<T>{
      *               the {@param target} will be mapped to.
      */
     protected void referenceTarget(T target, Bundle bundle){
-        String tag = extractKey(bundle);
+        String tag = extractTag(bundle);
         if(tag != null && mTargetTagMap.containsKey(tag)){
             mTargetTagMap.put(tag, new WeakReference<T>(target));
         }
@@ -120,7 +120,7 @@ abstract class BundleTagInjector<T>{
     }
 
 
-    private String extractKey(Bundle bundle){
+    private String extractTag(Bundle bundle){
         return bundle != null ? bundle.getString(mBundleTagKey) : null;
     }
 }

@@ -3,7 +3,6 @@ package de.juliushetzel.vagar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -13,7 +12,6 @@ public final class TagManager {
     private static final AtomicLong NEXT_TAG = new AtomicLong(0);
 
     private final BundleTagInjector<Activity> mActivityBundleTagInjector = new ActivityBundleTagInjector(EXTRA_TAG_VIEW_MODEL_HOLDER);
-    //private final BundleTagInjector<Fragment> mFragmentBundleTagInjector = new BundleTagInjector<>(EXTRA_TAG_VIEW_MODEL_HOLDER);
 
     /**
      * @return a unique String tag
@@ -39,8 +37,8 @@ public final class TagManager {
      */
     String getTag(@NonNull Activity activity,
                          Bundle savedInstanceState){
-        String tag = extractTag(savedInstanceState);
-        removeTag(savedInstanceState);
+        String tag = extractTag(EXTRA_TAG_VIEW_MODEL_HOLDER, savedInstanceState);
+        removeTag(EXTRA_TAG_VIEW_MODEL_HOLDER, savedInstanceState);
         if(tag == null){
             tag = getUniqueTag();
             mActivityBundleTagInjector.registerForInjection(activity, tag);
@@ -48,41 +46,19 @@ public final class TagManager {
         return tag;
     }
 
-    /* for Fragment */
-
-    String getTag(@NonNull Fragment fragment,
-                         Bundle savedInstanceState){
-        String tag = extractTag(savedInstanceState);
-        removeTag(savedInstanceState);
-        if(tag == null){
-            tag = getUniqueTag();
-            addToTagRetainer(fragment, tag);
-        }
-        return tag;
-    }
-
-    private void addToTagRetainer(@NonNull Fragment fragment,
-                                  @NonNull String newTag){
-        /*FragmentTagRetainerOLD tagRetainingLifecycleCallbacks = new FragmentTagRetainerOLD(
-                fragment,
-                newTag
-        );
-        fragment.getFragmentManager().registerFragmentLifecycleCallbacks(tagRetainingLifecycleCallbacks.asCallbacks(), false);*/
-    }
-
     /* for All */
 
-    static String extractTag(Bundle savedInstanceState){
+    static String extractTag(String key, Bundle savedInstanceState){
         String tag = null;
         if(savedInstanceState != null){
-            tag = savedInstanceState.getString(EXTRA_TAG_VIEW_MODEL_HOLDER);
+            tag = savedInstanceState.getString(key);
         }
         return tag;
     }
 
-    private void removeTag(Bundle savedInstanceState){
+    private void removeTag(String key, Bundle savedInstanceState){
         if(savedInstanceState != null) {
-            savedInstanceState.remove(TagManager.EXTRA_TAG_VIEW_MODEL_HOLDER);
+            savedInstanceState.remove(key);
         }
     }
 }

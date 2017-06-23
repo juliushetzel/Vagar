@@ -7,7 +7,7 @@ import android.support.v4.util.Pair;
 import de.juliushetzel.vagar.ViewModel;
 import de.juliushetzel.vagar.databinding.ObservablePair;
 
-public class OtherViewModel implements ViewModel{
+public class OtherViewModel extends ViewModel{
 
     public final ObservablePair<Class<?>, Bundle> navigationObservable = new ObservablePair<>();
 

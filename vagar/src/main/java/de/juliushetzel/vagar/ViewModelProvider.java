@@ -1,7 +1,7 @@
 package de.juliushetzel.vagar;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 
 final class ViewModelProvider {
 

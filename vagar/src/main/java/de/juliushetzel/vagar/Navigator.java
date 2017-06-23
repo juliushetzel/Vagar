@@ -30,12 +30,12 @@ public abstract class Navigator<A extends Activity> extends Observable.OnPropert
         return mActivityReference.get();
     }
 
-    public abstract void navigateTo(Class<? extends Activity> activity, Bundle bundle);
+    public abstract void navigateTo(Class<?> clazz, Bundle bundle);
 
     @Override
     public void onPropertyChanged(Observable observable, int i) {
-        ObservablePair<Class<? extends Activity>, Bundle> navigationObservable
-                = (ObservablePair<Class<? extends Activity>, Bundle>) observable;
+        ObservablePair<Class<?>, Bundle> navigationObservable
+                = (ObservablePair<Class<?>, Bundle>) observable;
         navigateTo(navigationObservable.getFirst(),
                 navigationObservable.getSecond());
     }
