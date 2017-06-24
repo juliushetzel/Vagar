@@ -24,6 +24,8 @@ public final class ViewModelBinder {
         return ViewModelProvider.get(activity.getFragmentManager(), factory, tag);
     }
 
+
+
     public static <V extends ViewModel> V bind(@NonNull Fragment fragment,
                                                @NonNull ViewModel.Factory<V> factory,
                                                @NonNull String tag){

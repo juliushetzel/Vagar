@@ -6,6 +6,7 @@ import android.app.Fragment;
 
 public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extends Fragment {
     private T mViewModel;
+    private Navigator mNavigator;
 
     public ViewModelHolder(){}
 
@@ -14,9 +15,13 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
      * @param viewModel the retaining mViewModel
      * @return an ViewModelHolder instance to addTagReferencePair the mViewModel
      */
-    static <T extends ViewModel> ViewModelHolder<T> newInstance(T viewModel){
+    static <T extends ViewModel> ViewModelHolder<T> newInstance(T viewModel, Navigator navigator){
         ViewModelHolder<T> viewModelHolder = new ViewModelHolder<>();
         viewModelHolder.mViewModel = viewModel;
+        if(navigator != null) {
+            viewModelHolder.mViewModel.mNavigationObservable.addOnPropertyChangedCallback(navigator);
+            viewModelHolder.mNavigator = navigator;
+        }
         return viewModelHolder;
     }
 
@@ -39,6 +44,7 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
     @Override
     public void onStart() {
         super.onStart();
+        if(mNavigator != null) mNavigator.attachActivity(getActivity());
         mViewModel.onStart();
     }
 
@@ -52,12 +58,12 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
     public void onPause() {
         super.onPause();
         mViewModel.onPause();
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mViewModel.onStop();
+        if(mNavigator != null) mNavigator.detachActivity();
     }
 }

@@ -1,7 +1,9 @@
 package de.juliushetzel.vagar.processor.generator;
 
 
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.List;
@@ -89,5 +91,9 @@ public abstract class Generator<I, O> {
 
     public static Generator<List<TypeElement>, List<MethodSpec.Builder>> forBindInternalMethodImplementations(Environment environment){
         return new BindInternalMethodImplementationsGenerator(environment);
+    }
+
+    public static Generator<TypeName, CodeBlock> forNavigatorFactoryImplementation(Environment environment){
+        return new NavigatorFactoryImplementationGenerator(environment);
     }
 }

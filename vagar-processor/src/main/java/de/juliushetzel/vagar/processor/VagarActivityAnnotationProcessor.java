@@ -30,7 +30,7 @@ import static com.squareup.javapoet.JavaFile.builder;
 import static de.juliushetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PACKAGE;
 
 
-@SupportedAnnotationTypes( "de.juliushetzel.vagar.annotation.Vagar" )
+@SupportedAnnotationTypes( "de.juliushetzel.vagar.annotation.Assemble" )
 @SupportedSourceVersion( SourceVersion.RELEASE_7 )
 public class VagarActivityAnnotationProcessor extends AbstractProcessor {
 

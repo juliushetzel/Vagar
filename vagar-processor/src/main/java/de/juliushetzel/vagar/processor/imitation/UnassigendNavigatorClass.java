@@ -1,10 +1,7 @@
 package de.juliushetzel.vagar.processor.imitation;
 
 
-final class EntryPointClass extends ImitatedType {
-
-    EntryPointClass(){}
-
+final class UnassigendNavigatorClass extends ImitatedType {
     @Override
     public String getPackagePath() {
         return "de.juliushetzel.vagar";
@@ -12,6 +9,6 @@ final class EntryPointClass extends ImitatedType {
 
     @Override
     public String getSimpleClassName() {
-        return "Vagar";
+        return "Navigator.Unassigned";
     }
 }

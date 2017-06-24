@@ -2,7 +2,7 @@ package de.juliushetzel.vagar.processor.imitation;
 
 
 /**
- * This Class's purpose  is to mimic the ViewModelBinderClass
+ * This Class's purpose  is to mimic the ViewModelProviderClass
  * class from de.juliushetzel.vagar package.
  *
  * It is necessary due to the fact, that the Vagar
@@ -10,11 +10,11 @@ package de.juliushetzel.vagar.processor.imitation;
  * Library which is not supporting annotation
  * processing.
  */
-final class ViewModelBinderClass extends ImitatedType {
+final class ViewModelProviderClass extends ImitatedType {
     private static final String PACKAGE_PATH = "de.juliushetzel.vagar";
     private static final String CLASS_NAME = "ViewModelBinder";
 
-    ViewModelBinderClass(){}
+    ViewModelProviderClass(){}
 
     @Override
     public String getPackagePath() {
@@ -23,6 +23,6 @@ final class ViewModelBinderClass extends ImitatedType {
 
     @Override
     public String getSimpleClassName() {
-        return "ViewModelBinder";
+        return "ViewModelProvider";
     }
 }

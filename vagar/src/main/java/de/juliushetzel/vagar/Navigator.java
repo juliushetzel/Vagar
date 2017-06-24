@@ -5,38 +5,47 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.Observable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 
-import de.juliushetzel.vagar.databinding.ObservablePair;
+import de.juliushetzel.vagar.databinding.ObservableTriplet;
 
-public abstract class Navigator<A extends Activity> extends Observable.OnPropertyChangedCallback {
+public abstract class Navigator extends Observable.OnPropertyChangedCallback {
 
-    private WeakReference<A> mActivityReference;
-    // make package local only!! //
-    public void attachActivity(A activity){
+    private WeakReference<Activity> mActivityReference;
+    void attachActivity(Activity activity){
         mActivityReference = new WeakReference<>(activity);
     }
 
-    public void detachActivity(){
+    void detachActivity(){
         mActivityReference.clear();
     }
 
+    @Nullable
     protected Context getContext(){
        return mActivityReference.get();
     }
 
-    protected A getActivity(){
+    @Nullable
+    protected Activity getActivity(){
         return mActivityReference.get();
     }
 
-    public abstract void navigateTo(Class<?> clazz, Bundle bundle);
+    public abstract void navigateTo(@Nullable Class<?> clazz, @Nullable Bundle bundle, @Nullable String action);
 
     @Override
     public void onPropertyChanged(Observable observable, int i) {
-        ObservablePair<Class<?>, Bundle> navigationObservable
-                = (ObservablePair<Class<?>, Bundle>) observable;
+        ObservableTriplet<Class<?>, Bundle, String> navigationObservable
+                = (ObservableTriplet<Class<?>, Bundle, String>) observable;
         navigateTo(navigationObservable.getFirst(),
-                navigationObservable.getSecond());
+                navigationObservable.getSecond(),
+                navigationObservable.getThird());
+    }
+
+    public abstract static class Unassigned extends Navigator{}
+
+    public interface Factory{
+        Navigator createNavigator();
     }
 }

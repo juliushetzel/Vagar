@@ -7,11 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import de.juliushetzel.vagar.Navigator;
 import de.juliushetzel.vagar.ViewModel;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
-public @interface Vagar {
+public @interface Assemble {
 
     Class<? extends ViewModel> viewModel();
 
@@ -20,4 +21,5 @@ public @interface Vagar {
 
     String viewModelTag() default "viewModel";
 
+    Class<? extends Navigator> navigator() default Navigator.Unassigned.class;
 }

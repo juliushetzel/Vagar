@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.ActivityOtherBinding;
 import de.juliushetzel.vagar.ViewModel;
-import de.juliushetzel.vagar.annotation.Vagar;
+import de.juliushetzel.vagar.annotation.Assemble;
 
-@Vagar(
+@Assemble(
         viewModel = OtherViewModel.class,
         layout = R.layout.activity_other,
         viewModelTag = "exampleTag"

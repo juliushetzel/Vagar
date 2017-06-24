@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.FragmentSubBinding;
 import de.juliushetzel.vagar.ViewModel;
-import de.juliushetzel.vagar.annotation.Vagar;
+import de.juliushetzel.vagar.annotation.Assemble;
 
-@Vagar(
+@Assemble(
         viewModel = FirstViewModel.class,
         layout = R.layout.fragment_sub
 )

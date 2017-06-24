@@ -18,7 +18,7 @@ final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotatio
 
     @Override
     public String getSimpleClassName() {
-        return "Vagar";
+        return "Assemble";
     }
 
     @Override
@@ -29,12 +29,14 @@ final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotatio
     private static final class Values extends Imitations.VagarAnnotationValues{
         private static final String KEY_VIEW_MODEL_TAG = "viewModelTag";
         private static final String KEY_VIEW_MODEL = "viewModel";
+        private static final String KEY_NAVIGATOR = "navigator";
         private static final String KEY_LAYOUT = "layout";
         private static final String KEY_VIEW_MODEL_TAG_DEFAULT_VALUE = "viewModel";
 
         private TypeName mViewModelTypeName;
         private int mLayoutResourceId;
         private String mViewModelTag;
+        private TypeName mNavigatorTypeName;
 
         private Values(TypeElement annotatedClass) {
             super(annotatedClass);
@@ -43,6 +45,11 @@ final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotatio
         @Override
         public TypeName getViewModelTypeName() {
             return mViewModelTypeName;
+        }
+
+        @Override
+        public TypeName getNavigatorTypeName() {
+            return (mNavigatorTypeName != null ? mNavigatorTypeName : Imitations.Classes.UNASSIGNED_NAVIGATOR.getClassName());
         }
 
         @Override
@@ -64,6 +71,8 @@ final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotatio
                 mLayoutResourceId = (Integer) entry.getValue().getValue();
             }else if(key.equals(KEY_VIEW_MODEL_TAG)){
                 mViewModelTag = (String) entry.getValue().getValue();
+            }else if(key.equals(KEY_NAVIGATOR)){
+                mNavigatorTypeName = TypeName.get((TypeMirror) entry.getValue().getValue());
             }
         }
     }

@@ -5,7 +5,6 @@ import android.databinding.BaseObservable;
 import android.support.v4.util.Pair;
 
 public class ObservablePair<F, S> extends BaseObservable {
-    static final long serialVersionUID = 1L;
     private Pair<F, S> mPair;
 
     /**
