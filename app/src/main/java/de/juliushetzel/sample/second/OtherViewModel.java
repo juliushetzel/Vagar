@@ -4,8 +4,8 @@ package de.juliushetzel.sample.second;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 
-import de.juliushetzel.vagar.ViewModel;
-import de.juliushetzel.vagar.databinding.ObservablePair;
+import jhetzel.vagar.ViewModel;
+import jhetzel.vagar.databinding.ObservablePair;
 
 public class OtherViewModel extends ViewModel{
 

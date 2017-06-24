@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.ActivityOtherBinding;
-import de.juliushetzel.vagar.ViewModel;
-import de.juliushetzel.vagar.annotation.Assemble;
+import jhetzel.vagar.Vagar;
+import jhetzel.vagar.ViewModel;
+import jhetzel.vagar.annotation.Assemble;
 
 @Assemble(
         viewModel = OtherViewModel.class,
@@ -23,7 +24,7 @@ public class OtherActivity extends AppCompatActivity implements ViewModel.Factor
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewBinding = de.juliushetzel.vagar.Vagar.bind(this, this);
+        mViewBinding = Vagar.bind(this, this);
     }
 
     @Override

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="de.juliushetzel.vagar"
+          package="jhetzel.vagar"
 >
 
     <application android:allowBackup="true"
