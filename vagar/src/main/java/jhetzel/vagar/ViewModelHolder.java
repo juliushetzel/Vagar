@@ -30,6 +30,7 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
      */
     @Nullable
     T getViewModel() {
+        mViewModel.onProvide();
         return mViewModel;
     }
 

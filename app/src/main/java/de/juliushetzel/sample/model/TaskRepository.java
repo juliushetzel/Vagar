@@ -9,4 +9,6 @@ public interface TaskRepository {
     List<Task> getCompletedTasks();
 
     void update(List<Task> tasks);
+
+    void addTask(Task task);
 }

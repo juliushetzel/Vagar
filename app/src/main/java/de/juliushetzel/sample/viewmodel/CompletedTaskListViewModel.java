@@ -16,12 +16,4 @@ public class CompletedTaskListViewModel extends TaskListViewModel{
     protected List<Task> loadTasks() {
         return mTaskRepository.getCompletedTasks();
     }
-
-    @Override
-    public void onSelected(Task task) {
-        if(!task.isCompleted()){
-            tasks.remove(task);
-            mTaskRepository.update(tasks);
-        }
-    }
 }

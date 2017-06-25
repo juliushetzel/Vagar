@@ -13,6 +13,8 @@ public abstract class ViewModel implements ViewModelLifecycleCallbacks {
         mNavigationObservable.set(clazz, bundle, action);
     }
 
+    @Override public void onProvide(){}
+
     @Override public void onStart(){}
 
     @Override public void onResume(){}

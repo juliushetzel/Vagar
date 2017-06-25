@@ -4,7 +4,6 @@ package de.juliushetzel.sample.view;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,29 +35,5 @@ public class UncompletedTasksListFragment extends Fragment implements ViewModel.
     @Override
     public ViewModel createViewModel() {
         return new UnCompletedTasksViewModel(TaskRepositoryImpl.getInstance());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(this.getClass().toString(), "onStart");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(this.getClass().toString(), "onStop");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(this.getClass().toString(), "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(this.getClass().toString(), "onPause");
     }
 }

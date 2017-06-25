@@ -21,10 +21,16 @@ public abstract class TaskListViewModel extends ViewModel implements TaskListAda
     }
 
     @Override
-    public void onResume() {
+    public void onProvide() {
+        super.onProvide();
         tasks.clear();
         tasks.addAll(loadTasks());
     }
 
     protected abstract List<Task> loadTasks();
+
+    @Override
+    public void onSelected(Task task) {
+        tasks.remove(task);
+    }
 }

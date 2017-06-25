@@ -49,4 +49,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void update(List<Task> tasks) {
         mTasks = tasks;
     }
+
+    @Override
+    public void addTask(Task task) {
+        mTasks.add(task);
+    }
 }

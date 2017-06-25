@@ -2,6 +2,7 @@ package de.juliushetzel.sample.viewmodel;
 
 import android.databinding.ObservableBoolean;
 
+import de.juliushetzel.sample.view.AddTaskActivity;
 import de.juliushetzel.sample.view.CompletedTasksListFragment;
 import de.juliushetzel.sample.view.UncompletedTasksListFragment;
 import jhetzel.vagar.ViewModel;
@@ -21,5 +22,9 @@ public class MainActivityViewModel extends ViewModel{
         showingUncompletedTasks.set(true);
         showingCompletedTasks.set(false);
         navigateTo(UncompletedTasksListFragment.class, null, null);
+    }
+
+    public void addTask(){
+        navigateTo(AddTaskActivity.class, null, null);
     }
 }

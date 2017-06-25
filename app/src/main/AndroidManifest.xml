@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="de.juliushetzel.sample.second.OtherActivity">
+        <activity android:name=".view.AddTaskActivity">
         </activity>
     </application>
 
