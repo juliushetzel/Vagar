@@ -84,7 +84,7 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
                     getClass().getSimpleName(),
                     e.getMessage());
         } catch (MissingClassInheritanceException e){
-            throw new WrongTypeAnnotatedException(Imitations.Annotations.VAGAR, e);
+            throw new WrongTypeAnnotatedException(Imitations.Annotations.ASSEMBLE, e);
         }
 
         return true;
@@ -93,10 +93,10 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
     private List<TypeElement> extractAnnotatedClasses(RoundEnvironment roundEnv) throws VagarAnnotationClassNotFound {
         mEnvironment.getLog().note("%s -> Extracting classes annotated with %s",
                 getClass().getSimpleName(),
-                Imitations.Annotations.VAGAR.getClassPath());
+                Imitations.Annotations.ASSEMBLE.getClassPath());
 
         List<TypeElement> annotatedElements = roundEnv
-                .getElementsAnnotatedWith(Imitations.Annotations.VAGAR.getAnnotationClass())
+                .getElementsAnnotatedWith(Imitations.Annotations.ASSEMBLE.getAnnotationClass())
                 .stream()
                 .filter((element) -> element.getKind().isClass())
                 .map((Function<Element, TypeElement>) element -> (TypeElement) element)
@@ -105,7 +105,7 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
         mEnvironment.getLog().note("%s -> Found %s classes annotated with %s",
                 getClass().getSimpleName(),
                 annotatedElements.size(),
-                Imitations.Annotations.VAGAR.getClassPath());
+                Imitations.Annotations.ASSEMBLE.getClassPath());
 
         return annotatedElements;
     }

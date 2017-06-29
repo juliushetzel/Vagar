@@ -12,6 +12,10 @@ import jhetzel.vagar.processor.exception.VagarAnnotationClassNotFound;
 
 public abstract class ImitatedAnnotation<V extends ImitatedAnnotation.Values> extends ImitatedType {
 
+    public ImitatedAnnotation(String packagePath, String simpleClassName) {
+        super(packagePath, simpleClassName);
+    }
+
     /**
      * Suppresses Warning cause we know it is going to be there!
      *

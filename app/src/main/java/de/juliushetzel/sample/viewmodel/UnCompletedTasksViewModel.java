@@ -1,7 +1,7 @@
 package de.juliushetzel.sample.viewmodel;
 
 
-import java.util.List;
+import android.databinding.ObservableList;
 
 import de.juliushetzel.sample.model.Task;
 import de.juliushetzel.sample.model.TaskRepository;
@@ -13,7 +13,7 @@ public class UnCompletedTasksViewModel extends TaskListViewModel{
     }
 
     @Override
-    protected List<Task> loadTasks() {
+    protected ObservableList<Task> loadTasks() {
         return mTaskRepository.getUncompletedTasks();
     }
 }

@@ -1,47 +1,31 @@
 package jhetzel.vagar.processor.imitation;
 
 
-import com.squareup.javapoet.TypeName;
+import jhetzel.vagar.processor.environment.Environment;
 
-import javax.lang.model.element.TypeElement;
+public final class Imitations {
 
-public interface Imitations {
-
-    interface Classes{
-        ImitatedType DATA_BINDING_UTIL      = new DataBindingUtilClass();
-        ImitatedType VIEW_DATA_BINDING      = new ViewDataBindingClass();
-        ImitatedType VIEW_MODEL_PROVIDER    = new ViewModelProviderClass();
-        ImitatedType VIEW_MODEL             = new ViewModelInterface();
-        ImitatedType ACTIVITY               = new ActivityClass();
-        ImitatedType FRAGMENT               = new FragmentClass();
-        ImitatedType LAYOUT_INFLATER        = new LayoutInflaterClass();
-        ImitatedType CONTEXT                = new ContextClass();
-        ImitatedType VIEW_GROUP             = new ViewGroupClass();
-        ImitatedType NAVIGATOR              = new NavigatorClass();
-        ImitatedType UNASSIGNED_NAVIGATOR   = new UnassigendNavigatorClass();
+    public static final class Classes{
+        public static final ImitatedType ACTIVITY               = new ImitatedType("android.app", "Activity");
+        public static final ImitatedType FRAGMENT               = new ImitatedType("android.app", "Fragment");
+        public static final ImitatedType LAYOUT_INFLATER        = new ImitatedType("android.view", "LayoutInflater");
+        public static final ImitatedType VIEW_GROUP             = new ImitatedType("android.view", "ViewGroup");
+        public static final ImitatedType CONTEXT                = new ImitatedType("android.content", "Context");
+        public static final ImitatedType DATA_BINDING_UTIL      = new ImitatedType("android.databinding", "DataBindingUtil");
+        public static final ImitatedType VIEW_DATA_BINDING      = new ImitatedType("android.databinding", "ViewDataBinding");
+        public static final ImitatedType VIEW_MODEL_PROVIDER    = new ImitatedType(Environment.FRAMEWORK_BASE_PACKAGE, "ViewModelProvider");
+        public static final ImitatedType VIEW_MODEL             = new ImitatedType(Environment.FRAMEWORK_BASE_PACKAGE, "ViewModel");
+        public static final ImitatedType NAVIGATOR              = new ImitatedType(Environment.FRAMEWORK_BASE_PACKAGE, "Navigator");
+        public static final ImitatedType UNASSIGNED_NAVIGATOR   = new ImitatedType(Environment.FRAMEWORK_BASE_PACKAGE + ".annotation", "Assemble.Unassigned");
     }
 
-    interface Interfaces{
-        ImitatedInterface INTERNAL_BINDER       = new InternalBinderInterface();
-        ImitatedInterface VIEW_MODEL_FACTORY    = new ViewModelFactoryInterface();
-        ImitatedInterface NAVIGATOR_FACTORY     = new NavigatorFactoryInterface();
+    public static final class Interfaces{
+        public static final ImitatedInterface INTERNAL_BINDER       = new ImitatedInterface(Environment.FRAMEWORK_BASE_PACKAGE, "Vagar.InternalBinder");
+        public static final ImitatedInterface VIEW_MODEL_FACTORY    = new ImitatedInterface(Environment.FRAMEWORK_BASE_PACKAGE, "ViewModel.Factory");
+        public static final ImitatedInterface NAVIGATOR_FACTORY     = new ImitatedInterface(Environment.FRAMEWORK_BASE_PACKAGE, "Navigator.Factory");
     }
 
-    interface Annotations{
-        ImitatedAnnotation<VagarAnnotationValues> VAGAR = new VagarAnnotation();
-    }
-
-    abstract class VagarAnnotationValues extends ImitatedAnnotation.Values{
-        VagarAnnotationValues(TypeElement annotatedClass) {
-            super(annotatedClass);
-        }
-
-        public abstract TypeName getViewModelTypeName();
-
-        public abstract TypeName getNavigatorTypeName();
-
-        public abstract int getLayoutResourceId();
-
-        public abstract String getViewModelTag();
+    public static final class Annotations{
+        public static final ImitatedAnnotation<AssembleAnnotationValues> ASSEMBLE = new AssembleAnnotation();
     }
 }

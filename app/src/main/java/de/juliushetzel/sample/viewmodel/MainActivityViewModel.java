@@ -1,30 +1,44 @@
 package de.juliushetzel.sample.viewmodel;
 
-import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 
+import de.juliushetzel.sample.navigation.TaskListType;
 import de.juliushetzel.sample.view.AddTaskActivity;
 import de.juliushetzel.sample.view.CompletedTasksListFragment;
 import de.juliushetzel.sample.view.UncompletedTasksListFragment;
+import jhetzel.vagar.NavigationEvent;
 import jhetzel.vagar.ViewModel;
 
 public class MainActivityViewModel extends ViewModel{
+    public ObservableField<TaskListType> currentScreen = new ObservableField<>(TaskListType.UNCOMPLETED);
 
-    public final ObservableBoolean showingCompletedTasks = new ObservableBoolean(false);
-    public final ObservableBoolean showingUncompletedTasks = new ObservableBoolean(false);
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(currentScreen.get() == TaskListType.COMPLETED){
+            showCompletedTasks();
+        }else{
+            showUncompletedTasks();
+        }
+    }
 
     public void showCompletedTasks(){
-        showingCompletedTasks.set(true);
-        showingUncompletedTasks.set(false);
-        navigateTo(CompletedTasksListFragment.class, null, null);
+        currentScreen.set(TaskListType.COMPLETED);
+        navigateTo(new NavigationEvent().setComponentClass(CompletedTasksListFragment.class));
     }
 
     public void showUncompletedTasks(){
-        showingUncompletedTasks.set(true);
-        showingCompletedTasks.set(false);
-        navigateTo(UncompletedTasksListFragment.class, null, null);
+        currentScreen.set(TaskListType.UNCOMPLETED);
+        navigateTo(new NavigationEvent().setComponentClass(UncompletedTasksListFragment.class));
+        /*navigation()
+                .setClass(UncompletedTasksListFragment.class)
+                .start();*/
     }
 
     public void addTask(){
-        navigateTo(AddTaskActivity.class, null, null);
+        navigateTo(new NavigationEvent().setComponentClass(AddTaskActivity.class));
+        /*navigation()
+                .setClass(AddTaskActivity.class)
+                .start();*/
     }
 }

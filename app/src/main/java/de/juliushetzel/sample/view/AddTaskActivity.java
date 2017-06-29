@@ -11,7 +11,7 @@ import android.widget.Toast;
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.ActivityAddTaskBinding;
 import de.juliushetzel.sample.model.TaskRepositoryImpl;
-import de.juliushetzel.sample.navigator.MainNavigator;
+import de.juliushetzel.sample.navigation.MainNavigator;
 import de.juliushetzel.sample.viewmodel.AddTaskViewModel;
 import jhetzel.vagar.Vagar;
 import jhetzel.vagar.ViewModel;
@@ -22,7 +22,6 @@ import jhetzel.vagar.annotation.Assemble;
         layout = R.layout.activity_add_task,
         viewModelTag = "addTaskViewModel",
         navigator = MainNavigator.class
-
 )
 public class AddTaskActivity extends Activity implements ViewModel.Factory<ViewModel> {
 

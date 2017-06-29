@@ -12,6 +12,7 @@ import com.squareup.javapoet.TypeVariableName;
 import javax.lang.model.element.TypeElement;
 
 import jhetzel.vagar.processor.environment.Environment;
+import jhetzel.vagar.processor.imitation.AssembleAnnotationValues;
 import jhetzel.vagar.processor.imitation.Imitations;
 
 final class BindMethodForFragmentGenerator extends Generator<TypeElement, MethodSpec.Builder> {
@@ -25,7 +26,7 @@ final class BindMethodForFragmentGenerator extends Generator<TypeElement, Method
 
     @Override
     public MethodSpec.Builder generate(TypeElement annotatedElement) {
-        Imitations.VagarAnnotationValues values = Imitations.Annotations.VAGAR.getValues(annotatedElement);
+        AssembleAnnotationValues values = Imitations.Annotations.ASSEMBLE.getValues(annotatedElement);
 
         getEnvironment().getLog().note("%s -> Start generating '%s' method for annotated class '%s'",
                 getClass().getSimpleName(),
@@ -41,8 +42,8 @@ final class BindMethodForFragmentGenerator extends Generator<TypeElement, Method
                 .addCode(getLayoutBindingCodeBlock(values.getLayoutResourceId()))
                 .addCode(Generator.forNavigatorFactoryImplementation(getEnvironment()).generate(values.getNavigatorTypeName()))
                 .addStatement("$T tag = $S", String.class, Generator.forViewModelTags(getEnvironment()).generate(annotatedElement))
-                .addStatement("$T viewModel = $T.get(component.getActivity().getFragmentManager(), factory, tag, navigatorFactory)", viewModelType, Imitations.Classes.VIEW_MODEL_PROVIDER.getClassName())
-                .addStatement("$L.setVariable($T.$L, viewModel)", BINDING_VARIABLE_NAME, getBindingReferenceTypeName(), values.getViewModelTag())
+                .addStatement("$T viewModel = $T.get(component, factory, tag, navigatorFactory)", viewModelType, Imitations.Classes.VIEW_MODEL_PROVIDER.getClassName())
+                .addStatement("$L.setVariable($T.$L, viewModel)", BINDING_VARIABLE_NAME, getBindingReferenceTypeName(), values.getViewModelBindingId())
                 .addStatement("return $L", BINDING_VARIABLE_NAME)
                 .addTypeVariable(getReturnTypeVariableName())
                 .returns(getReturnTypeName());
@@ -56,11 +57,10 @@ final class BindMethodForFragmentGenerator extends Generator<TypeElement, Method
 
     private CodeBlock getLayoutBindingCodeBlock(int layoutResourceId) {
         return CodeBlock.of(
-                "$T inflater = ($T) component.getActivity().getSystemService($T.LAYOUT_INFLATER_SERVICE);\n" +
-                        "$L $L = $T.inflate(inflater, $L, container, false);\n",
+                "$T inflater = $T.from(component.getActivity());\n" +
+                "$L $L = $T.inflate(inflater, $L, container, false);\n",
                 Imitations.Classes.LAYOUT_INFLATER.getClassName(),
                 Imitations.Classes.LAYOUT_INFLATER.getClassName(),
-                Imitations.Classes.CONTEXT.getClassName(),
                 GENERIC_BINDING,
                 BINDING_VARIABLE_NAME,
                 Imitations.Classes.DATA_BINDING_UTIL.getClassName(),

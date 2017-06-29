@@ -1,35 +1,41 @@
-package de.juliushetzel.sample.navigator;
+package de.juliushetzel.sample.navigation;
 
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.view.CompletedTasksListFragment;
 import de.juliushetzel.sample.view.UncompletedTasksListFragment;
+import jhetzel.vagar.NavigationEvent;
 import jhetzel.vagar.Navigator;
 
 public class MainNavigator extends Navigator {
 
     @Override
-    public void navigateTo(@Nullable Class<?> clazz, @Nullable Bundle bundle, @Nullable String action) {
+    protected void onIncomingNavigation(@NonNull NavigationEvent navigationEvent) {
         if(getActivity() == null){
             return;
         }
 
-        if(Activity.class.isAssignableFrom(clazz)){
-            navigateToActivity(clazz);
+        Class<?> cls = navigationEvent.getComponentClass();
+        if(Activity.class.isAssignableFrom(cls)){
+            navigateToActivity(cls);
         }else{
-            navigateToFragment(clazz);
+            navigateToFragment(cls);
         }
+    }
+
+    /*@Override
+    public void onIncomingNavigation(@Nullable Class<?> clazz, @Nullable Bundle bundle, @Nullable String action) {
+
 
 
         // DIskussion fragment ist an activitylifecycle gebundne ->
         // mit support library könnte man FragmentLifeCycleCallbacks registrieren um es an den Fragment Lifecycle zu binden.
-    }
+    }*/
 
     private void navigateToFragment(Class<?> clazz) {
         Fragment fragment = null;
@@ -50,7 +56,7 @@ public class MainNavigator extends Navigator {
     }
 
     private void navigateToActivity(Class clazz){
-        Intent intent = new Intent(getContext(), clazz);
+        Intent intent = new Intent(getActivity(), clazz);
         getActivity().startActivity(intent);
     }
 }

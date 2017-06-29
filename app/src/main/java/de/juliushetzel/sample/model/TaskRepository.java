@@ -1,14 +1,14 @@
 package de.juliushetzel.sample.model;
 
 
-import java.util.List;
+import android.databinding.ObservableList;
 
 public interface TaskRepository {
-    List<Task> getUncompletedTasks();
+    ObservableList<Task> getUncompletedTasks();
 
-    List<Task> getCompletedTasks();
+    ObservableList<Task> getCompletedTasks();
 
-    void update(List<Task> tasks);
+    void update(Task task);
 
     void addTask(Task task);
 }

@@ -1,19 +1,21 @@
 package de.juliushetzel.sample.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 
 public class TaskRepositoryImpl implements TaskRepository {
     private static TaskRepository sInstance;
-    private List<Task> mTasks;
+    private ObservableList<Task> mCompletedTasks;
+    private ObservableList<Task> mUnCompletedTasks;
 
     private TaskRepositoryImpl(){
-        mTasks = new ArrayList<>();
-        mTasks.add(new Task("Hallo!"));
-        mTasks.add(new Task("Huhu!"));
-        mTasks.add(new Task("Wie gehts?"));
-        mTasks.add(new Task("Alles klar!"));
+        mUnCompletedTasks = new ObservableArrayList<>();
+        mCompletedTasks = new ObservableArrayList<>();
+        mUnCompletedTasks.add(new Task("Hallo"));
+        mUnCompletedTasks.add(new Task("Huhu!"));
+        mUnCompletedTasks.add(new Task("Wie gehts?"));
+        mUnCompletedTasks.add(new Task("Alles klar!"));
     }
 
     public static TaskRepository getInstance(){
@@ -24,34 +26,28 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> getUncompletedTasks() {
-        List<Task> uncompletedTasks = new ArrayList<>();
-        for(Task task : mTasks){
-            if(!task.isCompleted()){
-                uncompletedTasks.add(task);
-            }
-        }
-        return uncompletedTasks;
+    public ObservableList<Task> getUncompletedTasks() {
+        return mUnCompletedTasks;
     }
 
     @Override
-    public List<Task> getCompletedTasks() {
-        List<Task> completedTasks = new ArrayList<>();
-        for(Task task : mTasks){
-            if(task.isCompleted()){
-                completedTasks.add(task);
-            }
-        }
-        return completedTasks;
+    public ObservableList<Task> getCompletedTasks() {
+        return mCompletedTasks;
     }
 
     @Override
-    public void update(List<Task> tasks) {
-        mTasks = tasks;
+    public void update(Task task) {
+        if(task.isCompleted()){
+            mUnCompletedTasks.remove(task);
+            mCompletedTasks.add(task);
+        }else{
+            mCompletedTasks.remove(task);
+            mUnCompletedTasks.add(task);
+        }
     }
 
     @Override
     public void addTask(Task task) {
-        mTasks.add(task);
+        mUnCompletedTasks.add(task);
     }
 }

@@ -14,6 +14,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import jhetzel.vagar.processor.environment.Environment;
+import jhetzel.vagar.processor.imitation.AssembleAnnotationValues;
 import jhetzel.vagar.processor.imitation.Imitations;
 
 final class BindInternalMethodForFragmentGenerator extends Generator<List<TypeElement>, MethodSpec.Builder> {
@@ -52,7 +53,7 @@ final class BindInternalMethodForFragmentGenerator extends Generator<List<TypeEl
 
         for(int index = 0 ; index < annotatedClasses.size() ; index++){
             TypeElement annotatedElement = annotatedClasses.get(index);
-            Imitations.VagarAnnotationValues values = Imitations.Annotations.VAGAR.getValues(annotatedElement);
+            AssembleAnnotationValues values = Imitations.Annotations.ASSEMBLE.getValues(annotatedElement);
 
             if(index == 0){
                 builder.append("if(fragment instanceof $T){")

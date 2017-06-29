@@ -1,19 +1,23 @@
 package jhetzel.vagar;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 
-import jhetzel.vagar.databinding.ObservableTriplet;
+/**
+ *
 
+ */
 public abstract class ViewModel implements ViewModelLifecycleCallbacks {
 
-    final ObservableTriplet<Class<?>, Bundle, String> mNavigationObservable = new ObservableTriplet<>();
+    private final ObservableField<NavigationEvent> mNavigationObservable = new ObservableField<>();
 
-    protected final void navigateTo(@Nullable Class<?> clazz, @Nullable Bundle bundle, @Nullable String action){
-        mNavigationObservable.set(clazz, bundle, action);
+    final ObservableField<NavigationEvent> getNavigationObservable(){
+        return mNavigationObservable;
     }
 
-    @Override public void onProvide(){}
+    protected void navigateTo(NavigationEvent navigationEvent){
+        mNavigationObservable.set(navigationEvent);
+    }
 
     @Override public void onStart(){}
 
@@ -24,6 +28,8 @@ public abstract class ViewModel implements ViewModelLifecycleCallbacks {
     @Override public void onStop(){}
 
     public interface Factory<V extends ViewModel>{
+
+        @NonNull
         V createViewModel();
     }
 }

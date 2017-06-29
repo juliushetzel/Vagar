@@ -7,6 +7,7 @@ import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.model.Task;
 import de.juliushetzel.sample.model.TaskRepository;
 import de.juliushetzel.sample.view.MainActivity;
+import jhetzel.vagar.NavigationEvent;
 import jhetzel.vagar.ViewModel;
 
 public class AddTaskViewModel extends ViewModel{
@@ -24,7 +25,7 @@ public class AddTaskViewModel extends ViewModel{
             toastMessage.set(R.string.task_text_field_empty);
         }else {
             mTaskRepository.addTask(new Task(text.get()));
-            navigateTo(MainActivity.class, null, null);
+            navigateTo(new NavigationEvent().setComponentClass(MainActivity.class));
         }
     }
 }

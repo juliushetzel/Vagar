@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+@Deprecated
 final class ActivityBundleTagInjector extends BundleTagInjector<Activity> implements Application.ActivityLifecycleCallbacks{
     private static final String TAG = ActivityBundleTagInjector.class.getSimpleName();
     private static final boolean DEBUG = true;

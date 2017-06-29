@@ -3,17 +3,28 @@ package jhetzel.vagar.processor.imitation;
 
 import com.squareup.javapoet.ClassName;
 
-public abstract class ImitatedType {
+public class ImitatedType {
+    private final String mPackagePath;
+    private final String mSimpleClassName;
+
+    public ImitatedType(String packagePath, String simpleClassName) {
+        mPackagePath = packagePath;
+        mSimpleClassName = simpleClassName;
+    }
 
     public String getClassPath(){
-        return getPackagePath() + "." + getSimpleClassName();
+        return mPackagePath + "." + mSimpleClassName;
     }
 
     public ClassName getClassName(){
-        return ClassName.get(getPackagePath(), getSimpleClassName());
+        return ClassName.get(mPackagePath, mSimpleClassName);
     }
 
-    public abstract String getPackagePath();
+    public String getPackagePath(){
+        return mPackagePath;
+    }
 
-    public abstract String getSimpleClassName();
+    public String getSimpleClassName(){
+        return mSimpleClassName;
+    };
 }

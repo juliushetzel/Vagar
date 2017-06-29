@@ -1,10 +1,17 @@
 package jhetzel.vagar;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extends Fragment {
+/**
+ *
+ * @param <T>
+ *
+ */
+public final class ViewModelHolder<T extends ViewModel> extends Fragment {
+
     private T mViewModel;
     private Navigator mNavigator;
 
@@ -15,11 +22,12 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
      * @param viewModel the retaining mViewModel
      * @return an ViewModelHolder instance to addTagReferencePair the mViewModel
      */
-    static <T extends ViewModel> ViewModelHolder<T> newInstance(T viewModel, Navigator navigator){
+    static <T extends ViewModel> ViewModelHolder<T> newInstance(T viewModel,
+                                                                Navigator navigator){
         ViewModelHolder<T> viewModelHolder = new ViewModelHolder<>();
         viewModelHolder.mViewModel = viewModel;
         if(navigator != null) {
-            viewModelHolder.mViewModel.mNavigationObservable.addOnPropertyChangedCallback(navigator);
+            viewModelHolder.mViewModel.getNavigationObservable().addOnPropertyChangedCallback(navigator);
             viewModelHolder.mNavigator = navigator;
         }
         return viewModelHolder;
@@ -28,9 +36,8 @@ public final class ViewModelHolder<T extends ViewModelLifecycleCallbacks> extend
     /**
      * @return the ViewModel held by the holder
      */
-    @Nullable
+    @NonNull
     T getViewModel() {
-        mViewModel.onProvide();
         return mViewModel;
     }
 

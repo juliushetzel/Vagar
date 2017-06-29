@@ -12,23 +12,18 @@ import javax.lang.model.type.TypeMirror;
 
 import static jhetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PACKAGE;
 
-final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotationValues>{
-    @Override
-    public String getPackagePath() {
-        return FRAMEWORK_BASE_PACKAGE + ".annotation";
+final class AssembleAnnotation extends ImitatedAnnotation<AssembleAnnotationValues>{
+
+    AssembleAnnotation() {
+        super(FRAMEWORK_BASE_PACKAGE + ".annotation", "Assemble");
     }
 
     @Override
-    public String getSimpleClassName() {
-        return "Assemble";
-    }
-
-    @Override
-    public Imitations.VagarAnnotationValues getValues(TypeElement annotatedElement) {
+    public Values getValues(TypeElement annotatedElement) {
         return new Values(annotatedElement);
     }
 
-    private static final class Values extends Imitations.VagarAnnotationValues{
+    private static final class Values extends AssembleAnnotationValues{
         private static final String KEY_VIEW_MODEL_TAG = "viewModelTag";
         private static final String KEY_VIEW_MODEL = "viewModel";
         private static final String KEY_NAVIGATOR = "navigator";
@@ -60,8 +55,8 @@ final class VagarAnnotation extends ImitatedAnnotation<Imitations.VagarAnnotatio
         }
 
         @Override
-        public String getViewModelTag() {
-            return (mViewModelTag != null ? mViewModelTag : KEY_VIEW_MODEL_TAG_DEFAULT_VALUE);
+        public String getViewModelBindingId() {
+            return mViewModelTag == null || mViewModelTag.equals("") ? KEY_VIEW_MODEL_TAG_DEFAULT_VALUE : mViewModelTag;
         }
 
         @Override

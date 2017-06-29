@@ -19,6 +19,7 @@ import java.util.WeakHashMap;
  * @param <T> should be a {@link android.app.Fragment} or
  *           {@link android.app.Activity}
  */
+@Deprecated
 abstract class BundleTagInjector<T>{
     private final Map<String, WeakReference<T>> mTargetTagMap;
     private final String mBundleTagKey;
