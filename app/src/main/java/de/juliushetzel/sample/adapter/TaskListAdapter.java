@@ -49,8 +49,7 @@ public class TaskListAdapter extends BaseAdapter {
                     LayoutInflater.from(parent.getContext()),
                     R.layout.item_task_list, parent, false);
             convertView = binding.getRoot();
-        }
-        else {
+        } else {
             binding = (ItemTaskListBinding) convertView.getTag();
         }
         Task task = mTasks.get(position);

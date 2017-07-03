@@ -14,7 +14,6 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import jhetzel.vagar.processor.environment.Environment;
-import jhetzel.vagar.processor.imitation.AssembleAnnotationValues;
 import jhetzel.vagar.processor.imitation.Imitations;
 
 final class BindInternalMethodForFragmentGenerator extends Generator<List<TypeElement>, MethodSpec.Builder> {
@@ -33,11 +32,11 @@ final class BindInternalMethodForFragmentGenerator extends Generator<List<TypeEl
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(Imitations.Classes.FRAGMENT.getClassName(), "fragment")
-                .addParameter(ParameterizedTypeName.get(Imitations.Interfaces.VIEW_MODEL_FACTORY.getClassName(), TypeVariableName.get(GENERIC_VIEW_MODEL)), "factory")
-                .addParameter(Imitations.Classes.VIEW_GROUP.getClassName(), "container")
-                .addTypeVariable(TypeVariableName.get(GENERIC_VIEW_MODEL, Imitations.Classes.VIEW_MODEL.getClassName()))
-                .addTypeVariable(TypeVariableName.get(GENERIC_BINDING, Imitations.Classes.VIEW_DATA_BINDING.getClassName()))
+                .addParameter(Imitations.Classes.FRAGMENT, "fragment")
+                .addParameter(ParameterizedTypeName.get(Imitations.Interfaces.VIEW_MODEL_FACTORY, TypeVariableName.get(GENERIC_VIEW_MODEL)), "factory")
+                .addParameter(Imitations.Classes.VIEW_GROUP, "container")
+                .addTypeVariable(TypeVariableName.get(GENERIC_VIEW_MODEL, Imitations.Classes.VIEW_MODEL))
+                .addTypeVariable(TypeVariableName.get(GENERIC_BINDING, Imitations.Classes.VIEW_DATA_BINDING))
                 .addCode(generateInstanceChecks(annotatedClasses))
                 .returns(TypeVariableName.get(GENERIC_BINDING));
 
@@ -53,22 +52,18 @@ final class BindInternalMethodForFragmentGenerator extends Generator<List<TypeEl
 
         for(int index = 0 ; index < annotatedClasses.size() ; index++){
             TypeElement annotatedElement = annotatedClasses.get(index);
-            AssembleAnnotationValues values = Imitations.Annotations.ASSEMBLE.getValues(annotatedElement);
 
             if(index == 0){
-                builder.append("if(fragment instanceof $T){")
-                        .append("\n\treturn bind(($T) fragment, ($T<$T>) factory, container);")
+                builder.append("if(fragment.getClass().equals($T.class)){")
+                        .append("\n\treturn bind(($T) fragment, factory, container);")
                         .append("\n}");
             }else{
-                builder.append("else if(fragment instanceof $T){")
-                        .append("\n\treturn bind(($T) fragment, ($T<$T>) factory, container);")
+                builder.append("else if(fragment.getClass().equals($T.class)){")
+                        .append("\n\treturn bind(($T) fragment, factory, container);")
                         .append("\n}");
             }
             arguments.add(TypeName.get(annotatedElement.asType()));
             arguments.add(TypeName.get(annotatedElement.asType()));
-
-            arguments.add(Imitations.Interfaces.VIEW_MODEL_FACTORY.getClassName());
-            arguments.add(values.getViewModelTypeName());
         }
 
         builder.append("\nreturn null;\n");

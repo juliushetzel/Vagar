@@ -8,7 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import jhetzel.vagar.Navigator;
-import jhetzel.vagar.ViewModel;
 /**
  * The Annotation Processor for this Annotation will build a simple
  * Method with which all the provided components will be assembled.
@@ -24,11 +23,6 @@ import jhetzel.vagar.ViewModel;
 public @interface Assemble {
 
     /**
-     * The type of the ViewModel
-     */
-    Class<? extends ViewModel> viewModel();
-
-    /**
      * The id of the layout, which the ViewModel should be bound to.
      */
     @LayoutRes
@@ -38,16 +32,10 @@ public @interface Assemble {
      * The tag under which the ViewModel instance will be accessible
      * in the xml layout file.
      */
-    String viewModelTag() default "viewModel";
+    String bindingTag() default "viewModel";
 
     /**
      * The Navigator Type, that should be connected to the ViewModel
      */
-    Class<? extends Navigator> navigator() default Unassigned.class;
-
-    /**
-     * An Empty implementation of the Navigator. This is only for to give
-     * the Annotation a default Navigator, as its use is optional.
-     */
-    abstract class Unassigned extends Navigator{}
+    Class<? extends Navigator> navigator() default Navigator.class;
 }

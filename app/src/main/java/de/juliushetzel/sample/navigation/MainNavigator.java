@@ -3,12 +3,13 @@ package de.juliushetzel.sample.navigation;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import de.juliushetzel.sample.R;
-import de.juliushetzel.sample.view.CompletedTasksListFragment;
-import de.juliushetzel.sample.view.UncompletedTasksListFragment;
+import de.juliushetzel.sample.view.CompletedTasksFragment;
+import de.juliushetzel.sample.view.UncompletedTasksFragment;
 import jhetzel.vagar.NavigationEvent;
 import jhetzel.vagar.Navigator;
 
@@ -28,21 +29,14 @@ public class MainNavigator extends Navigator {
         }
     }
 
-    /*@Override
-    public void onIncomingNavigation(@Nullable Class<?> clazz, @Nullable Bundle bundle, @Nullable String action) {
-
-
-
-        // DIskussion fragment ist an activitylifecycle gebundne ->
-        // mit support library könnte man FragmentLifeCycleCallbacks registrieren um es an den Fragment Lifecycle zu binden.
-    }*/
-
     private void navigateToFragment(Class<?> clazz) {
+        FragmentManager fragmentManager = getActivity().getFragmentManager();
+
         Fragment fragment = null;
-        if(clazz == CompletedTasksListFragment.class){
-            fragment = CompletedTasksListFragment.newInstance();
-        }else if(clazz == UncompletedTasksListFragment.class){
-            fragment = UncompletedTasksListFragment.newInstance();
+        if(clazz == CompletedTasksFragment.class){
+            fragment = CompletedTasksFragment.newInstance();
+        }else if(clazz == UncompletedTasksFragment.class){
+            fragment = UncompletedTasksFragment.newInstance();
         }
 
         if(fragment == null){

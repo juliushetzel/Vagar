@@ -1,11 +1,11 @@
 package jhetzel.vagar.processor.environment;
 
 
-import jhetzel.vagar.processor.environment.EnvironmentImpl;
-
 import javax.annotation.processing.ProcessingEnvironment;
 
 import jhetzel.vagar.processor.conditions.InheritanceChecker;
+import jhetzel.vagar.processor.conditions.TypeChecker;
+import jhetzel.vagar.processor.imitation.AnnotationValueExtractor;
 import jhetzel.vagar.processor.log.Log;
 
 /**
@@ -28,7 +28,9 @@ public interface Environment {
 
     InheritanceChecker getInheritanceChecker();
 
-    ProcessingEnvironment getProcessingEnvironment();
+    TypeChecker getTypeChecker();
+
+    AnnotationValueExtractor getAnnotationValueExtractor();
 
     /**
      * @param processingEnvironment

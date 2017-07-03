@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import de.juliushetzel.sample.R;
 import de.juliushetzel.sample.databinding.ActivityAddTaskBinding;
-import de.juliushetzel.sample.model.TaskRepositoryImpl;
 import de.juliushetzel.sample.navigation.MainNavigator;
 import de.juliushetzel.sample.viewmodel.AddTaskViewModel;
 import jhetzel.vagar.Vagar;
@@ -18,13 +17,11 @@ import jhetzel.vagar.ViewModel;
 import jhetzel.vagar.annotation.Assemble;
 
 @Assemble(
-        viewModel = AddTaskViewModel.class,
         layout = R.layout.activity_add_task,
-        viewModelTag = "addTaskViewModel",
+        bindingTag = "addTaskViewModel",
         navigator = MainNavigator.class
 )
-public class AddTaskActivity extends Activity implements ViewModel.Factory<ViewModel> {
-
+public class AddTaskActivity extends Activity implements ViewModel.Factory<AddTaskViewModel> {
     ActivityAddTaskBinding mViewBinding;
 
     Observable.OnPropertyChangedCallback mToastMessageCallback;
@@ -55,7 +52,7 @@ public class AddTaskActivity extends Activity implements ViewModel.Factory<ViewM
     }
 
     @Override
-    public ViewModel createViewModel() {
-        return new AddTaskViewModel(TaskRepositoryImpl.getInstance());
+    public AddTaskViewModel createViewModel() {
+        return new AddTaskViewModel();
     }
 }

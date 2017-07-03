@@ -1,17 +1,16 @@
 package jhetzel.vagar.processor.exception;
 
 
+import com.squareup.javapoet.ClassName;
+
 import javax.lang.model.element.TypeElement;
 
-import jhetzel.vagar.processor.imitation.ImitatedAnnotation;
-import jhetzel.vagar.processor.imitation.ImitatedType;
-
 public class WrongTypeAnnotatedException extends RuntimeException {
-    private final ImitatedAnnotation mImitatedAnnotation;
-    private final ImitatedType[] mSuperTypes;
+    private final ClassName mImitatedAnnotation;
+    private final ClassName[] mSuperTypes;
     private final TypeElement mAnnotetedElement;
 
-    public WrongTypeAnnotatedException(ImitatedAnnotation annotation, MissingClassInheritanceException exception){
+    public WrongTypeAnnotatedException(ClassName annotation, MissingClassInheritanceException exception){
         mImitatedAnnotation = annotation;
         mSuperTypes = exception.getSuperTypes();
         mAnnotetedElement = exception.getType();
@@ -21,7 +20,7 @@ public class WrongTypeAnnotatedException extends RuntimeException {
     public String getMessage() {
         StringBuilder stringBuilder = new StringBuilder()
                 .append("Annotation ")
-                .append(mImitatedAnnotation.getClassPath())
+                .append(mImitatedAnnotation.reflectionName())
                 .append(" is not assignable to ")
                 .append(mAnnotetedElement.getSimpleName().toString())
                 .append(". Element ")
@@ -33,7 +32,7 @@ public class WrongTypeAnnotatedException extends RuntimeException {
             }else if(index == mSuperTypes.length -1){
                 stringBuilder.append(" or ");
             }
-            stringBuilder.append(mSuperTypes[index].getClassPath());
+            stringBuilder.append(mSuperTypes[index].reflectionName());
         }
 
         return stringBuilder.append("!").toString();

@@ -1,17 +1,17 @@
 package jhetzel.vagar.processor.exception;
 
 
+import com.squareup.javapoet.ClassName;
+
 import java.util.Arrays;
 
 import javax.lang.model.element.TypeElement;
 
-import jhetzel.vagar.processor.imitation.ImitatedType;
-
 public class MissingClassInheritanceException extends RuntimeException{
     private final TypeElement mType;
-    private final ImitatedType[] mSuperTypes;
+    private final ClassName[] mSuperTypes;
 
-    public MissingClassInheritanceException(TypeElement type, ImitatedType... superTypes){
+    public MissingClassInheritanceException(TypeElement type, ClassName... superTypes){
         mType = type;
         mSuperTypes = superTypes;
     }
@@ -24,7 +24,7 @@ public class MissingClassInheritanceException extends RuntimeException{
                 .append(" needs to inherit from one of these types: ");
 
         Arrays.stream(mSuperTypes)
-                .map(ImitatedType::getClassPath)
+                .map(ClassName::reflectionName)
                 .forEach(stringBuilder::append);
 
         return stringBuilder.toString();
@@ -34,7 +34,7 @@ public class MissingClassInheritanceException extends RuntimeException{
         return mType;
     }
 
-    public ImitatedType[] getSuperTypes() {
+    public ClassName[] getSuperTypes() {
         return mSuperTypes;
     }
 }

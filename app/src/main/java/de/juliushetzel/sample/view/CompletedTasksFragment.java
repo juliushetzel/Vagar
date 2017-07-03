@@ -9,20 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.juliushetzel.sample.R;
-import de.juliushetzel.sample.model.TaskRepositoryImpl;
-import de.juliushetzel.sample.viewmodel.CompletedTaskListViewModel;
+import de.juliushetzel.sample.viewmodel.CompletedTasksViewModel;
 import jhetzel.vagar.Vagar;
 import jhetzel.vagar.ViewModel;
 import jhetzel.vagar.annotation.Assemble;
 
-@Assemble(
-        viewModel = CompletedTaskListViewModel.class,
-        layout = R.layout.fragment_task_list
-)
-public class CompletedTasksListFragment extends Fragment implements ViewModel.Factory<ViewModel> {
+@Assemble(layout = R.layout.fragment_task_list)
+public class CompletedTasksFragment extends Fragment implements ViewModel.Factory<CompletedTasksViewModel> {
 
-    public static CompletedTasksListFragment newInstance() {
-        CompletedTasksListFragment fragment = new CompletedTasksListFragment();
+    public static CompletedTasksFragment newInstance() {
+        CompletedTasksFragment fragment = new CompletedTasksFragment();
         return fragment;
     }
 
@@ -33,7 +29,7 @@ public class CompletedTasksListFragment extends Fragment implements ViewModel.Fa
     }
 
     @Override
-    public ViewModel createViewModel() {
-        return new CompletedTaskListViewModel(TaskRepositoryImpl.getInstance());
+    public CompletedTasksViewModel createViewModel() {
+        return new CompletedTasksViewModel();
     }
 }

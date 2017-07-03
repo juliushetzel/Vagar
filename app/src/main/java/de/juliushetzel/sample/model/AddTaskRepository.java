@@ -3,7 +3,7 @@ package de.juliushetzel.sample.model;
 
 import android.databinding.ObservableList;
 
-public interface TaskRepository {
+public interface AddTaskRepository {
     ObservableList<Task> getUncompletedTasks();
 
     ObservableList<Task> getCompletedTasks();

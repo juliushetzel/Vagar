@@ -4,21 +4,20 @@ package de.juliushetzel.sample.model;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
-public class TaskRepositoryImpl implements TaskRepository {
-    private static TaskRepository sInstance;
+public class TaskRepositoryImpl implements AddTaskRepository {
+    private static AddTaskRepository sInstance;
     private ObservableList<Task> mCompletedTasks;
     private ObservableList<Task> mUnCompletedTasks;
 
     private TaskRepositoryImpl(){
         mUnCompletedTasks = new ObservableArrayList<>();
         mCompletedTasks = new ObservableArrayList<>();
-        mUnCompletedTasks.add(new Task("Hallo"));
-        mUnCompletedTasks.add(new Task("Huhu!"));
-        mUnCompletedTasks.add(new Task("Wie gehts?"));
-        mUnCompletedTasks.add(new Task("Alles klar!"));
+        mUnCompletedTasks.add(new Task("Ein Wolf"));
+        mUnCompletedTasks.add(new Task("Ein Schaf"));
+        mUnCompletedTasks.add(new Task("Ein Kohlkopf"));
     }
 
-    public static TaskRepository getInstance(){
+    public static AddTaskRepository getInstance(){
         if(sInstance == null){
             sInstance = new TaskRepositoryImpl();
         }

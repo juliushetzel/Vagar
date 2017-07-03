@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
             name="viewModel"
-            type="de.juliushetzel.sample.viewmodel.MainActivityViewModel"/>
+            type="de.juliushetzel.sample.viewmodel.TaskListViewModel"/>
     </data>
 
     <LinearLayout
@@ -17,7 +16,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="48dp"
+            android:background="@color/colorPrimary">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -32,7 +32,8 @@
                 app:layout_constraintVertical_bias="0.6"
                 android:id="@+id/textView2"
                 android:layout_marginLeft="8dp"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textColor="@color/text_view_bright_font"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +48,8 @@
                 android:id="@+id/textView"
                 app:layout_constraintVertical_bias="0.666"
                 app:layout_constraintLeft_toRightOf="@+id/textView2"
-                android:layout_marginLeft="8dp"/>
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/text_view_bright_font"/>
 
             <ImageButton
                 android:layout_width="48dp"

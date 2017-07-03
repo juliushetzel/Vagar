@@ -29,8 +29,8 @@ final class InternalBinderClassGenerator extends Generator<List<TypeElement>, Ty
                 FRAMEWORK_GENERATED_BINDER_CLASS_NAME);
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(FRAMEWORK_GENERATED_BINDER_CLASS_NAME)
-                .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                .addSuperinterface(Imitations.Interfaces.INTERNAL_BINDER.getClassName())
+                .addModifiers(Modifier.FINAL)
+                .addSuperinterface(Imitations.Interfaces.INTERNAL_BINDER)
                 .addMethod(getConstructor())
                 .addMethods(getBindInternalMethodImplementations(annotatedElements));
 

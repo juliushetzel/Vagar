@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.processing.ProcessingEnvironment;
 
 import jhetzel.vagar.processor.conditions.InheritanceChecker;
+import jhetzel.vagar.processor.conditions.TypeChecker;
+import jhetzel.vagar.processor.imitation.AnnotationValueExtractor;
 import jhetzel.vagar.processor.log.Log;
 
 /**
@@ -13,18 +15,20 @@ import jhetzel.vagar.processor.log.Log;
  */
 class EnvironmentImpl implements Environment{
     private static final String OPTIONS_KEY_MODULE_PACKAGE = "android.databinding.modulePackage";
-    private final ProcessingEnvironment mProcessingEnvironment;
     private final InheritanceChecker mInheritanceChecker;
+    private final TypeChecker mTypeChecker;
+    private final AnnotationValueExtractor mAnnotationValueExtractor;
 
     private Log mLog;
 
     private Map<String, String> mOptions;
 
     EnvironmentImpl(ProcessingEnvironment processingEnvironment){
-        mProcessingEnvironment = processingEnvironment;
-        mLog = Log.newImplementation(mProcessingEnvironment.getMessager());
-        mOptions = mProcessingEnvironment.getOptions();
-        mInheritanceChecker = InheritanceChecker.newImplementation(mProcessingEnvironment);
+        mLog = Log.newImplementation(processingEnvironment.getMessager());
+        mOptions = processingEnvironment.getOptions();
+        mInheritanceChecker = InheritanceChecker.newImplementation(processingEnvironment);
+        mTypeChecker = TypeChecker.newImplementation(processingEnvironment);
+        mAnnotationValueExtractor = AnnotationValueExtractor.newImplementation(mTypeChecker);
     }
 
     @Override
@@ -43,7 +47,12 @@ class EnvironmentImpl implements Environment{
     }
 
     @Override
-    public ProcessingEnvironment getProcessingEnvironment() {
-        return mProcessingEnvironment;
+    public TypeChecker getTypeChecker() {
+        return mTypeChecker;
+    }
+
+    @Override
+    public AnnotationValueExtractor getAnnotationValueExtractor() {
+        return mAnnotationValueExtractor;
     }
 }

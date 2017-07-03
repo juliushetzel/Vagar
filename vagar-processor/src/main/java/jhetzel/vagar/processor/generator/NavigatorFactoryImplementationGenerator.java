@@ -15,8 +15,8 @@ final class NavigatorFactoryImplementationGenerator extends Generator<TypeName, 
 
     @Override
     public CodeBlock generate(TypeName navigatorType) {
-        if(navigatorType.equals(Imitations.Classes.UNASSIGNED_NAVIGATOR.getClassName())){
-            return CodeBlock.of("$T navigatorFactory = null;\n", Imitations.Interfaces.NAVIGATOR_FACTORY.getClassName());
+        if(navigatorType.equals(Imitations.Classes.NAVIGATOR)){
+            return CodeBlock.of("$T navigatorFactory = null;\n", Imitations.Interfaces.NAVIGATOR_FACTORY);
         }
 
         return CodeBlock.of(
@@ -25,9 +25,9 @@ final class NavigatorFactoryImplementationGenerator extends Generator<TypeName, 
                 "\t\treturn new $T();\n" +
                 "\t}\n" +
                 "};\n",
-                Imitations.Interfaces.NAVIGATOR_FACTORY.getClassName(),
-                Imitations.Interfaces.NAVIGATOR_FACTORY.getClassName(),
-                Imitations.Classes.NAVIGATOR.getClassName(),
+                Imitations.Interfaces.NAVIGATOR_FACTORY,
+                Imitations.Interfaces.NAVIGATOR_FACTORY,
+                Imitations.Classes.NAVIGATOR,
                 navigatorType
         );
     }

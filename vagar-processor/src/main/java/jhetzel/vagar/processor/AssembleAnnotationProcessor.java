@@ -4,6 +4,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,8 +21,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import jhetzel.vagar.processor.environment.Environment;
+import jhetzel.vagar.processor.exception.AssembleAnnotationClassNotFoundException;
 import jhetzel.vagar.processor.exception.MissingClassInheritanceException;
-import jhetzel.vagar.processor.exception.VagarAnnotationClassNotFound;
 import jhetzel.vagar.processor.exception.WrongTypeAnnotatedException;
 import jhetzel.vagar.processor.generator.Generator;
 import jhetzel.vagar.processor.imitation.Imitations;
@@ -31,8 +32,8 @@ import static jhetzel.vagar.processor.environment.Environment.FRAMEWORK_BASE_PAC
 
 
 @SupportedAnnotationTypes( "jhetzel.vagar.annotation.Assemble" )
-@SupportedSourceVersion( SourceVersion.RELEASE_7 )
-public class VagarActivityAnnotationProcessor extends AbstractProcessor {
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
+public class AssembleAnnotationProcessor extends AbstractProcessor {
 
     private Environment mEnvironment;
 
@@ -79,8 +80,8 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
                     getClass().getSimpleName(),
                     e.getMessage());
 
-        } catch (VagarAnnotationClassNotFound e) {
-            mEnvironment.getLog().error("%s -> Vagar Annotation not found: %s",
+        } catch (AssembleAnnotationClassNotFoundException e) {
+            mEnvironment.getLog().error("%s -> Assemble Annotation not found: %s",
                     getClass().getSimpleName(),
                     e.getMessage());
         } catch (MissingClassInheritanceException e){
@@ -90,13 +91,20 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
         return true;
     }
 
-    private List<TypeElement> extractAnnotatedClasses(RoundEnvironment roundEnv) throws VagarAnnotationClassNotFound {
+    private List<TypeElement> extractAnnotatedClasses(RoundEnvironment roundEnv) throws AssembleAnnotationClassNotFoundException {
         mEnvironment.getLog().note("%s -> Extracting classes annotated with %s",
                 getClass().getSimpleName(),
-                Imitations.Annotations.ASSEMBLE.getClassPath());
+                Imitations.Annotations.ASSEMBLE);
+
+        Class<? extends Annotation> annotationClass;
+        try {
+            annotationClass = (Class<? extends Annotation>) Class.forName(Imitations.Annotations.ASSEMBLE.reflectionName());
+        } catch (ClassNotFoundException e) {
+            throw new AssembleAnnotationClassNotFoundException(e);
+        }
 
         List<TypeElement> annotatedElements = roundEnv
-                .getElementsAnnotatedWith(Imitations.Annotations.ASSEMBLE.getAnnotationClass())
+                .getElementsAnnotatedWith(annotationClass)
                 .stream()
                 .filter((element) -> element.getKind().isClass())
                 .map((Function<Element, TypeElement>) element -> (TypeElement) element)
@@ -105,7 +113,7 @@ public class VagarActivityAnnotationProcessor extends AbstractProcessor {
         mEnvironment.getLog().note("%s -> Found %s classes annotated with %s",
                 getClass().getSimpleName(),
                 annotatedElements.size(),
-                Imitations.Annotations.ASSEMBLE.getClassPath());
+                Imitations.Annotations.ASSEMBLE);
 
         return annotatedElements;
     }

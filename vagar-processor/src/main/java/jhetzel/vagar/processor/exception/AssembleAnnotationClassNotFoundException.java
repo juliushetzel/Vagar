@@ -1,10 +1,10 @@
 package jhetzel.vagar.processor.exception;
 
 
-public class VagarAnnotationClassNotFound extends Exception{
+public class AssembleAnnotationClassNotFoundException extends Exception{
     private ClassNotFoundException mBaseException;
 
-    public VagarAnnotationClassNotFound(ClassNotFoundException exception){
+    public AssembleAnnotationClassNotFoundException(ClassNotFoundException exception){
         mBaseException = exception;
     }
 

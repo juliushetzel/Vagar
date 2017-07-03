@@ -14,7 +14,6 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import jhetzel.vagar.processor.environment.Environment;
-import jhetzel.vagar.processor.imitation.AssembleAnnotationValues;
 import jhetzel.vagar.processor.imitation.Imitations;
 
 final class BindInternalMethodForActivityGenerator extends Generator<List<TypeElement>, MethodSpec.Builder> {
@@ -33,10 +32,10 @@ final class BindInternalMethodForActivityGenerator extends Generator<List<TypeEl
 
         MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(Imitations.Classes.ACTIVITY.getClassName(), "activity")
-                .addParameter(ParameterizedTypeName.get(Imitations.Interfaces.VIEW_MODEL_FACTORY.getClassName(), TypeVariableName.get(GENERIC_VIEW_MODEL)), "factory")
-                .addTypeVariable(TypeVariableName.get(GENERIC_VIEW_MODEL, Imitations.Classes.VIEW_MODEL.getClassName()))
-                .addTypeVariable(TypeVariableName.get(GENERIC_BINDING, Imitations.Classes.VIEW_DATA_BINDING.getClassName()))
+                .addParameter(Imitations.Classes.ACTIVITY, "activity")
+                .addParameter(ParameterizedTypeName.get(Imitations.Interfaces.VIEW_MODEL_FACTORY, TypeVariableName.get(GENERIC_VIEW_MODEL)), "factory")
+                .addTypeVariable(TypeVariableName.get(GENERIC_VIEW_MODEL, Imitations.Classes.VIEW_MODEL))
+                .addTypeVariable(TypeVariableName.get(GENERIC_BINDING, Imitations.Classes.VIEW_DATA_BINDING))
                 .addCode(generateInstanceChecks(annotatedClasses))
                 .returns(TypeVariableName.get(GENERIC_BINDING));
 
@@ -52,22 +51,18 @@ final class BindInternalMethodForActivityGenerator extends Generator<List<TypeEl
 
         for(int index = 0 ; index < annotatedClasses.size() ; index++){
             TypeElement annotatedElement = annotatedClasses.get(index);
-            AssembleAnnotationValues values = Imitations.Annotations.ASSEMBLE.getValues(annotatedElement);
 
             if(index == 0){
-                builder.append("if(activity instanceof $T){")
-                        .append("\n\treturn bind(($T) activity, ($T<$T>) factory);")
+                builder.append("if(activity.getClass().equals($T.class)){")
+                        .append("\n\treturn bind(($T) activity, factory);")
                         .append("\n}");
             }else{
-                builder.append("else if(activity instanceof $T){")
-                        .append("\n\treturn bind(($T) activity, ($T<$T>) factory);")
+                builder.append("else if(activity.getClass().equals($T.class)){")
+                        .append("\n\treturn bind(($T) activity, factory);")
                         .append("\n}");
             }
             arguments.add(TypeName.get(annotatedElement.asType()));
             arguments.add(TypeName.get(annotatedElement.asType()));
-
-            arguments.add(Imitations.Interfaces.VIEW_MODEL_FACTORY.getClassName());
-            arguments.add(values.getViewModelTypeName());
         }
 
         builder.append("\nreturn null;\n");

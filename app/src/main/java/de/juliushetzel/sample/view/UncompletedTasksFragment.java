@@ -9,20 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.juliushetzel.sample.R;
-import de.juliushetzel.sample.model.TaskRepositoryImpl;
-import de.juliushetzel.sample.viewmodel.UnCompletedTasksViewModel;
+import de.juliushetzel.sample.viewmodel.UncompletedTasksViewModel;
 import jhetzel.vagar.Vagar;
 import jhetzel.vagar.ViewModel;
 import jhetzel.vagar.annotation.Assemble;
 
-@Assemble(
-        viewModel = UnCompletedTasksViewModel.class,
-        layout = R.layout.fragment_task_list
-)
-public class UncompletedTasksListFragment extends Fragment implements ViewModel.Factory<ViewModel> {
+@Assemble(layout = R.layout.fragment_task_list)
+public class UncompletedTasksFragment extends Fragment implements ViewModel.Factory<UncompletedTasksViewModel> {
 
-    public static UncompletedTasksListFragment newInstance() {
-        UncompletedTasksListFragment fragment = new UncompletedTasksListFragment();
+    public static UncompletedTasksFragment newInstance() {
+        UncompletedTasksFragment fragment = new UncompletedTasksFragment();
         return fragment;
     }
 
@@ -33,7 +29,7 @@ public class UncompletedTasksListFragment extends Fragment implements ViewModel.
     }
 
     @Override
-    public ViewModel createViewModel() {
-        return new UnCompletedTasksViewModel(TaskRepositoryImpl.getInstance());
+    public UncompletedTasksViewModel createViewModel() {
+        return new UncompletedTasksViewModel();
     }
 }
